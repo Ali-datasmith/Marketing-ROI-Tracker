@@ -1,0 +1,23 @@
+# Streamlit — multi-file CSV upload UI, KPI dashboard, tabs, session state management
+streamlit==1.38.0
+
+# Pandas — CSV normalization across inconsistent Google/Facebook/Email/SEO export formats
+pandas==2.2.2
+
+# DuckDB — in-memory SQL engine for cross-channel joins, window functions (WoW deltas)
+duckdb==1.0.0
+
+# Plotly — Sankey spend-to-revenue flow chart, bar comparisons, pie allocation, sparklines
+plotly==5.22.0
+
+# NumPy — vectorized CPA/ROAS calculations and outlier/threshold detection
+numpy==1.26.4
+
+# python-dateutil — flexible parsing of inconsistent date formats across ad platform CSVs
+python-dateutil==2.9.0.post0
+
+# Faker — generating realistic fake campaign names and demo ad performance data
+Faker==25.8.0
+
+# Pydantic — strict schema validation of normalized records before DuckDB insertion
+pydantic==2.7.4
