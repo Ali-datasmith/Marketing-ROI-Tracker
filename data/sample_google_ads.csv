@@ -1,0 +1,351 @@
+Day,Campaign,Cost,Clicks,Impressions,Conversions,Conv. value
+2024-08-23,"Winter Sale - Hill, Walker and Doyle",249.816,527,23140,10.0,707.7307142274171
+2024-08-24,"Winter Sale - Hill, Walker and Doyle",192.11,405,17783,8.0,566.1845713819337
+2024-08-25,"Winter Sale - Hill, Walker and Doyle",157.12,331,14534,6.0,424.63842853645025
+2024-08-26,"Winter Sale - Hill, Walker and Doyle",339.4634,717,31483,14.0,990.8229999183839
+2024-08-27,"Winter Sale - Hill, Walker and Doyle",162.407,343,15061,6.0,424.63842853645025
+2024-08-28,"Winter Sale - Hill, Walker and Doyle",162.4,343,15061,6.0,424.63842853645025
+2024-08-29,"Winter Sale - Hill, Walker and Doyle",123.23,260,11416,5.0,353.86535711370857
+2024-08-30,"Winter Sale - Hill, Walker and Doyle",446.47,943,41407,19.0,1344.6883570320924
+2024-08-31,"Winter Sale - Hill, Walker and Doyle",136.1784,287,12602,5.0,353.86535711370857
+2024-09-01,"Winter Sale - Hill, Walker and Doyle",153.29,323,14182,6.0,424.63842853645025
+2024-09-02,"Winter Sale - Hill, Walker and Doyle",108.2338,228,10011,4.0,283.09228569096683
+2024-09-03,"Winter Sale - Hill, Walker and Doyle",487.9639,1030,45227,20.0,1415.4614284548343
+2024-09-04,"Winter Sale - Hill, Walker and Doyle",432.9771,914,40133,18.0,1273.9152856093508
+2024-09-05,"Winter Sale - Hill, Walker and Doyle",184.94,390,17124,7.0,495.41149995919193
+2024-09-06,"Winter Sale - Hill, Walker and Doyle",172.73,364,15983,7.0,495.41149995919193
+2024-09-07,"Winter Sale - Hill, Walker and Doyle",69.345,146,6410,2.0,141.54614284548342
+2024-09-08,"Winter Sale - Hill, Walker and Doyle",88.68,187,8211,3.0,212.31921426822512
+2024-09-09,"Winter Sale - Hill, Walker and Doyle",309.9,654,28717,13.0,920.0499284956422
+2024-09-10,"Winter Sale - Hill, Walker and Doyle",272.78,576,25292,11.0,778.5037856501588
+2024-09-11,"Winter Sale - Hill, Walker and Doyle",216.49,457,20066,9.0,636.9576428046754
+2024-09-12,"Winter Sale - Hill, Walker and Doyle",344.74,728,31966,14.0,990.8229999183839
+2024-09-13,"Winter Sale - Hill, Walker and Doyle",155.7975,329,14446,6.0,424.63842853645025
+2024-09-14,"Winter Sale - Hill, Walker and Doyle",86.7431,183,8035,3.0,212.31921426822512
+2024-09-15,"Winter Sale - Hill, Walker and Doyle",98.62,208,9133,4.0,283.09228569096683
+2024-09-16,"Winter Sale - Hill, Walker and Doyle",282.428,596,26170,12.0,849.2768570729005
+2024-09-17,"Winter Sale - Hill, Walker and Doyle",414.07,874,38377,17.0,1203.142214186609
+2024-09-18,"Winter Sale - Hill, Walker and Doyle",179.8695,380,16685,7.0,495.41149995919193
+2024-09-19,"Winter Sale - Hill, Walker and Doyle",305.6938,645,28322,13.0,920.0499284956422
+2024-09-20,"Winter Sale - Hill, Walker and Doyle",336.9658,711,31220,14.0,990.8229999183839
+2024-09-21,"Winter Sale - Hill, Walker and Doyle",47.4321,100,4391,2.0,141.54614284548342
+2024-09-22,"Winter Sale - Hill, Walker and Doyle",137.207,289,12690,5.0,353.86535711370857
+2024-09-23,"Winter Sale - Hill, Walker and Doyle",168.21,355,15588,7.0,495.41149995919193
+2024-09-24,"Winter Sale - Hill, Walker and Doyle",126.021,266,11680,5.0,353.86535711370857
+2024-09-25,"Winter Sale - Hill, Walker and Doyle",479.5542,1013,44480,20.0,1415.4614284548343
+2024-09-26,"Winter Sale - Hill, Walker and Doyle",486.253,1027,45095,20.0,1415.4614284548343
+2024-09-27,"Winter Sale - Hill, Walker and Doyle",423.36,894,39255,18.0,1273.9152856093508
+2024-09-28,"Winter Sale - Hill, Walker and Doyle",88.74,187,8211,3.0,212.31921426822512
+2024-09-29,"Winter Sale - Hill, Walker and Doyle",55.6275,117,5137,2.0,141.54614284548342
+2024-09-30,"Winter Sale - Hill, Walker and Doyle",373.693,789,34645,15.0,1061.5960713411257
+2024-10-01,"Winter Sale - Hill, Walker and Doyle",276.061,0,25599,11.0,778.5037856501588
+2024-10-02,"Winter Sale - Hill, Walker and Doyle",148.815,314,13787,6.0,424.63842853645025
+2024-10-03,"Winter Sale - Hill, Walker and Doyle",298.07,629,27619,12.0,849.2768570729005
+2024-10-04,"Winter Sale - Hill, Walker and Doyle",113.76,240,10538,4.0,283.09228569096683
+2024-10-05,"Winter Sale - Hill, Walker and Doyle",185.491,391,17168,7.0,495.41149995919193
+2024-10-06,"Winter Sale - Hill, Walker and Doyle",81.4,171,7508,3.0,212.31921426822512
+2024-10-07,"Winter Sale - Hill, Walker and Doyle",365.01,771,33854,15.0,1061.5960713411257
+2024-10-08,"Winter Sale - Hill, Walker and Doyle",224.684,474,20813,9.0,636.9576428046754
+2024-10-09,"Winter Sale - Hill, Walker and Doyle",308.03,650,28541,13.0,920.0499284956422
+2024-10-10,"Winter Sale - Hill, Walker and Doyle",318.684,673,29551,13.0,920.0499284956422
+2024-10-11,"Winter Sale - Hill, Walker and Doyle",173.942,367,16115,7.0,495.41149995919193
+2024-10-12,"Winter Sale - Hill, Walker and Doyle",195.1335,412,18090,8.0,566.1845713819337
+2024-10-13,"Winter Sale - Hill, Walker and Doyle",164.021,346,15192,6.0,424.63842853645025
+2024-10-14,"Winter Sale - Hill, Walker and Doyle",475.8,1005,44129,20.0,1415.4614284548343
+2024-10-15,"Winter Sale - Hill, Walker and Doyle",457.9309,967,42461,19.0,1344.6883570320924
+2024-10-16,"Winter Sale - Hill, Walker and Doyle",339.16,716,31439,14.0,990.8229999183839
+2024-10-17,"Winter Sale - Hill, Walker and Doyle",468.7497,990,43470,20.0,1415.4614284548343
+2024-10-18,"Winter Sale - Hill, Walker and Doyle",135.4,286,12558,5.0,353.86535711370857
+2024-10-19,"Winter Sale - Hill, Walker and Doyle",71.357,150,6586,3.0,212.31921426822512
+2024-10-20,"Winter Sale - Hill, Walker and Doyle",47.24,99,4347,2.0,141.54614284548342
+2024-10-21,"Winter Sale - Hill, Walker and Doyle",230.1321,486,21340,9.0,636.9576428046754
+2024-10-22,"Winter Sale - Hill, Walker and Doyle",255.471,539,23667,10.0,707.7307142274171
+2024-10-23,"Winter Sale - Hill, Walker and Doyle",208.5396,440,19320,8.0,566.1845713819337
+2024-10-24,"Winter Sale - Hill, Walker and Doyle",431.495,911,40002,18.0,1273.9152856093508
+2024-10-25,"Winter Sale - Hill, Walker and Doyle",242.701,512,22481,10.0,707.7307142274171
+2024-10-26,"Winter Sale - Hill, Walker and Doyle",84.9495,179,7859,3.0,212.31921426822512
+2024-10-27,"Winter Sale - Hill, Walker and Doyle",126.83,267,11723,5.0,353.86535711370857
+2024-10-28,"Winter Sale - Hill, Walker and Doyle",156.3697,330,14490,6.0,424.63842853645025
+2024-10-29,"Winter Sale - Hill, Walker and Doyle",420.88,889,39036,17.0,1203.142214186609
+2024-10-30,"Winter Sale - Hill, Walker and Doyle",129.82,274,12031,5.0,353.86535711370857
+2024-10-31,"Winter Sale - Hill, Walker and Doyle",494.7548,1045,45886,21.0,1486.234499877576
+2024-08-23,"Q3 Launch - Henderson, Johnson and Robinson",382.74,491,15997,21.0,1157.8129743903046
+2024-08-24,"Q3 Launch - Henderson, Johnson and Robinson",156.641,201,6548,8.0,441.07160929154463
+2024-08-25,"Q3 Launch - Henderson, Johnson and Robinson",163.4,209,6809,9.0,496.2055604529877
+2024-08-26,"Q3 Launch - Henderson, Johnson and Robinson",129.62,166,5408,7.0,385.93765813010157
+2024-08-27,"Q3 Launch - Henderson, Johnson and Robinson",243.39,312,10165,13.0,716.7413650987601
+2024-08-28,"Q3 Launch - Henderson, Johnson and Robinson",146.348,0,6092,8.0,441.07160929154463
+2024-08-29,"Q3 Launch - Henderson, Johnson and Robinson",445.241,571,18604,25.0,1378.348779036077
+2024-08-30,"Q3 Launch - Henderson, Johnson and Robinson",349.319,0,14596,19.0,1047.5450720674185
+2024-08-31,"Q3 Launch - Henderson, Johnson and Robinson",92.9437,119,3877,5.0,275.6697558072154
+2024-09-01,"Q3 Launch - Henderson, Johnson and Robinson",50.169,64,2085,2.0,110.26790232288616
+2024-09-02,"Q3 Launch - Henderson, Johnson and Robinson",224.39,288,9383,12.0,661.607413937317
+2024-09-03,"Q3 Launch - Henderson, Johnson and Robinson",230.073,295,9611,13.0,716.7413650987601
+2024-09-04,"Q3 Launch - Henderson, Johnson and Robinson",391.842,503,16388,22.0,1212.9469255517477
+2024-09-05,"Q3 Launch - Henderson, Johnson and Robinson",355.02,455,14824,20.0,1102.6790232288615
+2024-09-06,"Q3 Launch - Henderson, Johnson and Robinson",454.8851,584,19027,25.0,1378.348779036077
+2024-09-07,"Q3 Launch - Henderson, Johnson and Robinson",115.554,148,4822,6.0,330.8037069686585
+2024-09-08,"Q3 Launch - Henderson, Johnson and Robinson",59.1351,75,2443,3.0,165.40185348432925
+2024-09-09,"Q3 Launch - Henderson, Johnson and Robinson",385.2979,494,16095,21.0,1157.8129743903046
+2024-09-10,"Q3 Launch - Henderson, Johnson and Robinson",404.314,519,16910,23.0,1268.0808767131907
+2024-09-11,"Q3 Launch - Henderson, Johnson and Robinson",324.51,416,13554,18.0,992.4111209059754
+2024-09-12,"Q3 Launch - Henderson, Johnson and Robinson",408.3869,524,17073,23.0,1268.0808767131907
+2024-09-13,"Q3 Launch - Henderson, Johnson and Robinson",297.5182,382,12446,16.0,882.1432185830893
+2024-09-14,"Q3 Launch - Henderson, Johnson and Robinson",123.64,158,5147,7.0,385.93765813010157
+2024-09-15,"Q3 Launch - Henderson, Johnson and Robinson",108.4066,139,4528,6.0,330.8037069686585
+2024-09-16,"Q3 Launch - Henderson, Johnson and Robinson",110.1677,141,4594,6.0,330.8037069686585
+2024-09-17,"Q3 Launch - Henderson, Johnson and Robinson",143.16,183,5962,8.0,441.07160929154463
+2024-09-18,"Q3 Launch - Henderson, Johnson and Robinson",112.57,144,4691,6.0,330.8037069686585
+2024-09-19,"Q3 Launch - Henderson, Johnson and Robinson",354.564,455,14824,20.0,1102.6790232288615
+2024-09-20,"Q3 Launch - Henderson, Johnson and Robinson",225.742,289,9416,12.0,661.607413937317
+2024-09-21,"Q3 Launch - Henderson, Johnson and Robinson",121.371,155,5050,6.0,330.8037069686585
+2024-09-22,"Q3 Launch - Henderson, Johnson and Robinson",185.2106,237,7721,10.0,551.3395116144308
+2024-09-23,"Q3 Launch - Henderson, Johnson and Robinson",199.7169,256,8341,11.0,606.4734627758738
+2024-09-24,"Q3 Launch - Henderson, Johnson and Robinson",264.1532,339,11045,15.0,827.0092674216462
+2024-09-25,"Q3 Launch - Henderson, Johnson and Robinson",402.22,516,16812,22.0,1212.9469255517477
+2024-09-26,"Q3 Launch - Henderson, Johnson and Robinson",191.5193,245,7982,10.0,551.3395116144308
+2024-09-27,"Q3 Launch - Henderson, Johnson and Robinson",130.792,167,5441,7.0,385.93765813010157
+2024-09-28,"Q3 Launch - Henderson, Johnson and Robinson",86.36,110,3584,4.0,220.53580464577232
+2024-09-29,"Q3 Launch - Henderson, Johnson and Robinson",65.8,84,2736,3.0,165.40185348432925
+2024-09-30,"Q3 Launch - Henderson, Johnson and Robinson",471.88,606,19744,26.0,1433.4827301975201
+2024-10-01,"Q3 Launch - Henderson, Johnson and Robinson",423.248,543,17692,24.0,1323.214827874634
+2024-10-02,"Q3 Launch - Henderson, Johnson and Robinson",353.362,453,14759,20.0,1102.6790232288615
+2024-10-03,"Q3 Launch - Henderson, Johnson and Robinson",448.584,576,18767,25.0,1378.348779036077
+2024-10-04,"Q3 Launch - Henderson, Johnson and Robinson",421.47,541,17626,24.0,1323.214827874634
+2024-10-05,"Q3 Launch - Henderson, Johnson and Robinson",69.85,89,2899,3.0,165.40185348432925
+2024-10-06,"Q3 Launch - Henderson, Johnson and Robinson",182.8094,234,7624,10.0,551.3395116144308
+2024-10-07,"Q3 Launch - Henderson, Johnson and Robinson",315.7369,405,13195,17.0,937.2771697445323
+2024-10-08,"Q3 Launch - Henderson, Johnson and Robinson",422.976,543,17692,24.0,1323.214827874634
+2024-10-09,"Q3 Launch - Henderson, Johnson and Robinson",458.44,588,19158,26.0,1433.4827301975201
+2024-10-10,"Q3 Launch - Henderson, Johnson and Robinson",227.2014,291,9481,12.0,661.607413937317
+2024-10-11,"Q3 Launch - Henderson, Johnson and Robinson",144.021,184,5995,8.0,441.07160929154463
+2024-10-12,"Q3 Launch - Henderson, Johnson and Robinson",76.47,98,3193,4.0,220.53580464577232
+2024-10-13,"Q3 Launch - Henderson, Johnson and Robinson",108.3372,139,4528,6.0,330.8037069686585
+2024-10-14,"Q3 Launch - Henderson, Johnson and Robinson",427.206,548,17854,24.0,1323.214827874634
+2024-10-15,"Q3 Launch - Henderson, Johnson and Robinson",444.29,570,18571,25.0,1378.348779036077
+2024-10-16,"Q3 Launch - Henderson, Johnson and Robinson",102.781,0,4268,5.0,275.6697558072154
+2024-10-17,"Q3 Launch - Henderson, Johnson and Robinson",304.3,390,12707,17.0,937.2771697445323
+2024-10-18,"Q3 Launch - Henderson, Johnson and Robinson",266.96,0,11143,15.0,827.0092674216462
+2024-10-19,"Q3 Launch - Henderson, Johnson and Robinson",75.5372,97,3160,4.0,220.53580464577232
+2024-10-20,"Q3 Launch - Henderson, Johnson and Robinson",59.1785,75,2443,3.0,165.40185348432925
+2024-10-21,"Q3 Launch - Henderson, Johnson and Robinson",235.0461,301,9807,13.0,716.7413650987601
+2024-10-22,"Q3 Launch - Henderson, Johnson and Robinson",477.164,612,19940,27.0,1488.6166813589632
+2024-10-23,"Q3 Launch - Henderson, Johnson and Robinson",229.2812,294,9579,13.0,716.7413650987601
+2024-10-24,"Q3 Launch - Henderson, Johnson and Robinson",307.5162,394,12837,17.0,937.2771697445323
+2024-10-25,"Q3 Launch - Henderson, Johnson and Robinson",381.208,489,15932,21.0,1157.8129743903046
+2024-10-26,"Q3 Launch - Henderson, Johnson and Robinson",98.1807,126,4105,5.0,275.6697558072154
+2024-10-27,"Q3 Launch - Henderson, Johnson and Robinson",195.485,251,8178,11.0,606.4734627758738
+2024-10-28,"Q3 Launch - Henderson, Johnson and Robinson",484.979,622,20266,27.0,1488.6166813589632
+2024-10-29,"Q3 Launch - Henderson, Johnson and Robinson",200.71,257,8373,11.0,606.4734627758738
+2024-10-30,"Q3 Launch - Henderson, Johnson and Robinson",298.9,383,12478,16.0,882.1432185830893
+2024-10-31,"Q3 Launch - Henderson, Johnson and Robinson",220.3513,282,9188,12.0,661.607413937317
+2024-08-23,"Q3 Sale - Gonzalez, Santos and Gardner",120.592,229,20483,10.0,584.1543016677358
+2024-08-24,"Q3 Sale - Gonzalez, Santos and Gardner",84.58,161,14400,7.0,408.90801116741505
+2024-08-25,"Q3 Sale - Gonzalez, Santos and Gardner",185.32,352,31484,16.0,934.6468826683773
+2024-08-26,"Q3 Sale - Gonzalez, Santos and Gardner",195.82,372,33273,17.0,993.0623128351509
+2024-08-27,"Q3 Sale - Gonzalez, Santos and Gardner",157.96,300,26833,13.0,759.4005921680566
+2024-08-28,"Q3 Sale - Gonzalez, Santos and Gardner",295.7811,563,50357,26.0,1518.8011843361132
+2024-08-29,"Q3 Sale - Gonzalez, Santos and Gardner",494.26,941,84168,43.0,2511.863497171264
+2024-08-30,"Q3 Sale - Gonzalez, Santos and Gardner",196.8221,374,33452,17.0,993.0623128351509
+2024-08-31,"Q3 Sale - Gonzalez, Santos and Gardner",147.542,280,25044,12.0,700.985162001283
+2024-09-01,"Q3 Sale - Gonzalez, Santos and Gardner",161.8591,308,27549,14.0,817.8160223348301
+2024-09-02,"Q3 Sale - Gonzalez, Santos and Gardner",195.06,371,33184,17.0,993.0623128351509
+2024-09-03,"Q3 Sale - Gonzalez, Santos and Gardner",391.287,745,66637,34.0,1986.1246256703018
+2024-09-04,"Q3 Sale - Gonzalez, Santos and Gardner",247.113,470,42039,21.0,1226.7240335022452
+2024-09-05,"Q3 Sale - Gonzalez, Santos and Gardner",352.9223,672,60107,31.0,1810.878335169981
+2024-09-06,"Q3 Sale - Gonzalez, Santos and Gardner",353.412,673,60196,31.0,1810.878335169981
+2024-09-07,"Q3 Sale - Gonzalez, Santos and Gardner",125.7239,0,21377,,642.5697318345094
+2024-09-08,"Q3 Sale - Gonzalez, Santos and Gardner",54.446,103,9212,4.0,233.66172066709433
+2024-09-09,"Q3 Sale - Gonzalez, Santos and Gardner",434.121,0,73882,,2219.786346337396
+2024-09-10,"Q3 Sale - Gonzalez, Santos and Gardner",228.31,434,38819,20.0,1168.3086033354716
+2024-09-11,"Q3 Sale - Gonzalez, Santos and Gardner",174.6074,332,29695,15.0,876.2314525016037
+2024-09-12,"Q3 Sale - Gonzalez, Santos and Gardner",116.3101,221,19767,10.0,584.1543016677358
+2024-09-13,"Q3 Sale - Gonzalez, Santos and Gardner",336.36,640,57245,29.0,1694.0474748364338
+2024-09-14,"Q3 Sale - Gonzalez, Santos and Gardner",148.4103,282,25223,13.0,759.4005921680566
+2024-09-15,"Q3 Sale - Gonzalez, Santos and Gardner",42.6541,81,7245,3.0,175.24629050032075
+2024-09-16,"Q3 Sale - Gonzalez, Santos and Gardner",304.837,580,51878,26.0,1518.8011843361132
+2024-09-17,"Q3 Sale - Gonzalez, Santos and Gardner",190.5983,362,32379,16.0,934.6468826683773
+2024-09-18,"Q3 Sale - Gonzalez, Santos and Gardner",358.069,681,60912,31.0,1810.878335169981
+2024-09-19,"Q3 Sale - Gonzalez, Santos and Gardner",169.75,323,28890,14.0,817.8160223348301
+2024-09-20,"Q3 Sale - Gonzalez, Santos and Gardner",376.375,0,64043,33.0,1927.7091955035282
+2024-09-21,"Q3 Sale - Gonzalez, Santos and Gardner",101.878,194,17352,8.0,467.32344133418866
+2024-09-22,"Q3 Sale - Gonzalez, Santos and Gardner",189.88,361,32289,16.0,934.6468826683773
+2024-09-23,"Q3 Sale - Gonzalez, Santos and Gardner",155.008,295,26386,13.0,759.4005921680566
+2024-09-24,"Q3 Sale - Gonzalez, Santos and Gardner",236.43,450,40250,20.0,1168.3086033354716
+2024-09-25,"Q3 Sale - Gonzalez, Santos and Gardner",145.3894,0,24686,12.0,700.985162001283
+2024-09-26,"Q3 Sale - Gonzalez, Santos and Gardner",469.8774,894,79964,41.0,2395.032636837717
+2024-09-27,"Q3 Sale - Gonzalez, Santos and Gardner",450.936,858,76744,39.0,2278.2017765041696
+2024-09-28,"Q3 Sale - Gonzalez, Santos and Gardner",81.2707,154,13774,7.0,408.90801116741505
+2024-09-29,"Q3 Sale - Gonzalez, Santos and Gardner",145.6,277,24776,12.0,700.985162001283
+2024-09-30,"Q3 Sale - Gonzalez, Santos and Gardner",426.8889,812,72629,37.0,2161.3709161706224
+2024-10-01,"Q3 Sale - Gonzalez, Santos and Gardner",322.08,613,54830,28.0,1635.6320446696602
+2024-10-02,"Q3 Sale - Gonzalez, Santos and Gardner",311.8602,593,53041,27.0,1577.2166145028866
+2024-10-03,"Q3 Sale - Gonzalez, Santos and Gardner",196.741,374,33452,17.0,993.0623128351509
+2024-10-04,"Q3 Sale - Gonzalez, Santos and Gardner",137.2411,261,23345,12.0,700.985162001283
+2024-10-05,"Q3 Sale - Gonzalez, Santos and Gardner",183.5545,349,31216,16.0,934.6468826683773
+2024-10-06,"Q3 Sale - Gonzalez, Santos and Gardner",184.0669,350,31305,16.0,934.6468826683773
+2024-10-07,"Q3 Sale - Gonzalez, Santos and Gardner",353.24,0,60107,,1810.878335169981
+2024-10-08,"Q3 Sale - Gonzalez, Santos and Gardner",235.61,448,40071,20.0,1168.3086033354716
+2024-10-09,"Q3 Sale - Gonzalez, Santos and Gardner",239.684,456,40787,21.0,1226.7240335022452
+2024-10-10,"Q3 Sale - Gonzalez, Santos and Gardner",390.38,743,66458,34.0,1986.1246256703018
+2024-10-11,"Q3 Sale - Gonzalez, Santos and Gardner",458.8441,873,78086,40.0,2336.6172066709432
+2024-10-12,"Q3 Sale - Gonzalez, Santos and Gardner",181.9338,346,30948,16.0,934.6468826683773
+2024-10-13,"Q3 Sale - Gonzalez, Santos and Gardner",164.78,313,27996,14.0,817.8160223348301
+2024-10-14,"Q3 Sale - Gonzalez, Santos and Gardner",356.8127,679,60733,31.0,1810.878335169981
+2024-10-15,"Q3 Sale - Gonzalez, Santos and Gardner",133.656,254,22719,11.0,642.5697318345094
+2024-10-16,"Q3 Sale - Gonzalez, Santos and Gardner",164.651,313,27996,14.0,817.8160223348301
+2024-10-17,"Q3 Sale - Gonzalez, Santos and Gardner",459.42,874,78175,40.0,2336.6172066709432
+2024-10-18,"Q3 Sale - Gonzalez, Santos and Gardner",342.57,652,58318,30.0,1752.4629050032074
+2024-10-19,"Q3 Sale - Gonzalez, Santos and Gardner",41.472,78,6976,3.0,175.24629050032075
+2024-10-20,"Q3 Sale - Gonzalez, Santos and Gardner",56.235,107,9570,4.0,233.66172066709433
+2024-10-21,"Q3 Sale - Gonzalez, Santos and Gardner",365.4,695,62164,32.0,1869.2937653367546
+2024-10-22,"Q3 Sale - Gonzalez, Santos and Gardner",102.02,194,17352,8.0,467.32344133418866
+2024-10-23,"Q3 Sale - Gonzalez, Santos and Gardner",164.32,312,27907,14.0,817.8160223348301
+2024-10-24,"Q3 Sale - Gonzalez, Santos and Gardner",319.4935,608,54382,28.0,1635.6320446696602
+2024-10-25,"Q3 Sale - Gonzalez, Santos and Gardner",376.76,717,64132,33.0,1927.7091955035282
+2024-10-26,"Q3 Sale - Gonzalez, Santos and Gardner",144.31,274,24508,12.0,700.985162001283
+2024-10-27,"Q3 Sale - Gonzalez, Santos and Gardner",75.8831,144,12880,6.0,350.4925810006415
+2024-10-28,"Q3 Sale - Gonzalez, Santos and Gardner",384.872,732,65474,33.0,1927.7091955035282
+2024-10-29,"Q3 Sale - Gonzalez, Santos and Gardner",194.9,371,33184,17.0,993.0623128351509
+2024-10-30,"Q3 Sale - Gonzalez, Santos and Gardner",230.1599,438,39177,20.0,1168.3086033354716
+2024-10-31,"Q3 Sale - Gonzalez, Santos and Gardner",398.6,759,67889,35.0,2044.5400558370754
+2024-08-23,"Holiday Acquisition - Ramirez, Booth and Blake",137.47,302,16674,7.0,392.78514101918154
+2024-08-24,"Holiday Acquisition - Ramirez, Booth and Blake",98.8345,217,11981,5.0,280.5608150137011
+2024-08-25,"Holiday Acquisition - Ramirez, Booth and Blake",82.432,181,9993,4.0,224.44865201096087
+2024-08-26,"Holiday Acquisition - Ramirez, Booth and Blake",197.5959,434,23962,10.0,561.1216300274021
+2024-08-27,"Holiday Acquisition - Ramirez, Booth and Blake",489.2,1075,59354,26.0,1458.9162380712457
+2024-08-28,"Holiday Acquisition - Ramirez, Booth and Blake",257.239,565,31195,14.0,785.5702820383631
+2024-08-29,"Holiday Acquisition - Ramirez, Booth and Blake",456.8186,1004,55434,25.0,1402.8040750685054
+2024-08-30,"Holiday Acquisition - Ramirez, Booth and Blake",352.4555,774,42735,19.0,1066.1310970520642
+2024-08-31,"Holiday Acquisition - Ramirez, Booth and Blake",167.17,367,20263,9.0,505.00946702466194
+2024-09-01,"Holiday Acquisition - Ramirez, Booth and Blake",120.42,264,14576,6.0,336.67297801644133
+2024-09-02,"Holiday Acquisition - Ramirez, Booth and Blake",330.7616,727,40140,18.0,1010.0189340493239
+2024-09-03,"Holiday Acquisition - Ramirez, Booth and Blake",297.0071,652,35999,16.0,897.7946080438435
+2024-09-04,"Holiday Acquisition - Ramirez, Booth and Blake",178.0972,391,21588,9.0,505.00946702466194
+2024-09-05,"Holiday Acquisition - Ramirez, Booth and Blake",388.98,855,47207,21.0,1178.3554230575446
+2024-09-06,"Holiday Acquisition - Ramirez, Booth and Blake",212.3089,466,25729,11.0,617.2337930301424
+2024-09-07,"Holiday Acquisition - Ramirez, Booth and Blake",43.891,96,5300,2.0,112.22432600548044
+2024-09-08,"Holiday Acquisition - Ramirez, Booth and Blake",143.276,314,17336,7.0,392.78514101918154
+2024-09-09,"Holiday Acquisition - Ramirez, Booth and Blake",170.8443,0,20705,,505.00946702466194
+2024-09-10,"Holiday Acquisition - Ramirez, Booth and Blake",476.1834,1046,57753,26.0,1458.9162380712457
+2024-09-11,"Holiday Acquisition - Ramirez, Booth and Blake",481.571,1058,58415,26.0,1458.9162380712457
+2024-09-12,"Holiday Acquisition - Ramirez, Booth and Blake",465.946,1024,56538,25.0,1402.8040750685054
+2024-09-13,"Holiday Acquisition - Ramirez, Booth and Blake",248.0635,545,30091,13.0,729.4581190356229
+2024-09-14,"Holiday Acquisition - Ramirez, Booth and Blake",42.473,93,5134,2.0,112.22432600548044
+2024-09-15,"Holiday Acquisition - Ramirez, Booth and Blake",188.53,414,22858,10.0,561.1216300274021
+2024-09-16,"Holiday Acquisition - Ramirez, Booth and Blake",271.27,0,32907,,785.5702820383631
+2024-09-17,"Holiday Acquisition - Ramirez, Booth and Blake",486.66,1069,59023,26.0,1458.9162380712457
+2024-09-18,"Holiday Acquisition - Ramirez, Booth and Blake",485.45,1067,58912,26.0,1458.9162380712457
+2024-09-19,"Holiday Acquisition - Ramirez, Booth and Blake",441.204,969,53501,24.0,1346.6919120657653
+2024-09-20,"Holiday Acquisition - Ramirez, Booth and Blake",217.78,478,26391,11.0,617.2337930301424
+2024-09-21,"Holiday Acquisition - Ramirez, Booth and Blake",101.6156,223,12312,5.0,280.5608150137011
+2024-09-22,"Holiday Acquisition - Ramirez, Booth and Blake",176.1819,387,21367,9.0,505.00946702466194
+2024-09-23,"Holiday Acquisition - Ramirez, Booth and Blake",226.77,498,27496,12.0,673.3459560328827
+2024-09-24,"Holiday Acquisition - Ramirez, Booth and Blake",167.7971,368,20318,9.0,505.00946702466194
+2024-09-25,"Holiday Acquisition - Ramirez, Booth and Blake",322.72,709,39146,17.0,953.9067710465837
+2024-09-26,"Holiday Acquisition - Ramirez, Booth and Blake",474.46,1043,57587,26.0,1458.9162380712457
+2024-09-27,"Holiday Acquisition - Ramirez, Booth and Blake",378.41,831,45882,20.0,1122.2432600548043
+2024-09-28,"Holiday Acquisition - Ramirez, Booth and Blake",131.2098,288,15901,7.0,392.78514101918154
+2024-09-29,"Holiday Acquisition - Ramirez, Booth and Blake",55.5482,122,6736,3.0,168.33648900822067
+2024-09-30,"Holiday Acquisition - Ramirez, Booth and Blake",346.0,760,41962,19.0,1066.1310970520642
+2024-10-01,"Holiday Acquisition - Ramirez, Booth and Blake",496.02,1090,60182,27.0,1515.0284010739858
+2024-10-02,"Holiday Acquisition - Ramirez, Booth and Blake",156.03,343,18938,8.0,448.89730402192174
+2024-10-03,"Holiday Acquisition - Ramirez, Booth and Blake",307.33,675,37269,16.0,897.7946080438435
+2024-10-04,"Holiday Acquisition - Ramirez, Booth and Blake",450.949,991,54716,24.0,1346.6919120657653
+2024-10-05,"Holiday Acquisition - Ramirez, Booth and Blake",158.52,348,19214,8.0,448.89730402192174
+2024-10-06,"Holiday Acquisition - Ramirez, Booth and Blake",151.5225,333,18386,8.0,448.89730402192174
+2024-10-07,"Holiday Acquisition - Ramirez, Booth and Blake",380.99,837,46213,20.0,1122.2432600548043
+2024-10-08,"Holiday Acquisition - Ramirez, Booth and Blake",243.796,535,29539,13.0,729.4581190356229
+2024-10-09,"Holiday Acquisition - Ramirez, Booth and Blake",217.4367,478,26391,11.0,617.2337930301424
+2024-10-10,"Holiday Acquisition - Ramirez, Booth and Blake",423.744,931,51403,23.0,1290.579749063025
+2024-10-11,"Holiday Acquisition - Ramirez, Booth and Blake",424.05,932,51458,23.0,1290.579749063025
+2024-10-12,"Holiday Acquisition - Ramirez, Booth and Blake",178.7316,392,21643,9.0,505.00946702466194
+2024-10-13,"Holiday Acquisition - Ramirez, Booth and Blake",186.12,409,22582,10.0,561.1216300274021
+2024-10-14,"Holiday Acquisition - Ramirez, Booth and Blake",304.537,669,36937,16.0,897.7946080438435
+2024-10-15,"Holiday Acquisition - Ramirez, Booth and Blake",300.6065,660,36440,16.0,897.7946080438435
+2024-10-16,"Holiday Acquisition - Ramirez, Booth and Blake",419.3181,921,50851,23.0,1290.579749063025
+2024-10-17,"Holiday Acquisition - Ramirez, Booth and Blake",359.986,791,43673,19.0,1066.1310970520642
+2024-10-18,"Holiday Acquisition - Ramirez, Booth and Blake",380.79,837,46213,20.0,1122.2432600548043
+2024-10-19,"Holiday Acquisition - Ramirez, Booth and Blake",167.327,367,20263,9.0,505.00946702466194
+2024-10-20,"Holiday Acquisition - Ramirez, Booth and Blake",182.401,400,22085,10.0,561.1216300274021
+2024-10-21,"Holiday Acquisition - Ramirez, Booth and Blake",235.2,517,28545,12.0,673.3459560328827
+2024-10-22,"Holiday Acquisition - Ramirez, Booth and Blake",250.23,550,30367,13.0,729.4581190356229
+2024-10-23,"Holiday Acquisition - Ramirez, Booth and Blake",137.59,302,16674,7.0,392.78514101918154
+2024-10-24,"Holiday Acquisition - Ramirez, Booth and Blake",331.3121,728,40195,18.0,1010.0189340493239
+2024-10-25,"Holiday Acquisition - Ramirez, Booth and Blake",114.377,251,13858,6.0,336.67297801644133
+2024-10-26,"Holiday Acquisition - Ramirez, Booth and Blake",114.496,0,13858,,336.67297801644133
+2024-10-27,"Holiday Acquisition - Ramirez, Booth and Blake",126.823,278,15349,6.0,336.67297801644133
+2024-10-28,"Holiday Acquisition - Ramirez, Booth and Blake",214.617,471,26005,11.0,617.2337930301424
+2024-10-29,"Holiday Acquisition - Ramirez, Booth and Blake",336.333,739,40802,18.0,1010.0189340493239
+2024-10-30,"Holiday Acquisition - Ramirez, Booth and Blake",112.2001,0,13582,,336.67297801644133
+2024-10-31,"Holiday Acquisition - Ramirez, Booth and Blake",114.94,252,13913,6.0,336.67297801644133
+2024-08-23,Flash Awareness - Ramirez-Lewis,407.9974,993,92720,27.0,903.6377561814734
+2024-08-24,Flash Awareness - Ramirez-Lewis,74.5314,181,16900,5.0,167.34032521879135
+2024-08-25,Flash Awareness - Ramirez-Lewis,139.6625,339,31653,9.0,301.21258539382444
+2024-08-26,Flash Awareness - Ramirez-Lewis,134.14,326,30440,9.0,301.21258539382444
+2024-08-27,Flash Awareness - Ramirez-Lewis,120.67,293,27358,8.0,267.7445203500662
+2024-08-28,Flash Awareness - Ramirez-Lewis,312.542,760,70964,21.0,702.8293659189237
+2024-08-29,Flash Awareness - Ramirez-Lewis,316.254,769,71805,21.0,702.8293659189237
+2024-08-30,Flash Awareness - Ramirez-Lewis,354.972,864,80675,24.0,803.2335610501985
+2024-08-31,Flash Awareness - Ramirez-Lewis,156.17,380,35482,10.0,334.6806504375827
+2024-09-01,Flash Awareness - Ramirez-Lewis,196.14,477,44539,13.0,435.08484556885753
+2024-09-02,Flash Awareness - Ramirez-Lewis,306.52,746,69657,20.0,669.3613008751654
+2024-09-03,Flash Awareness - Ramirez-Lewis,229.18,557,52009,15.0,502.0209756563741
+2024-09-04,Flash Awareness - Ramirez-Lewis,418.0745,1017,94961,28.0,937.1058212252317
+2024-09-05,Flash Awareness - Ramirez-Lewis,208.333,507,47340,14.0,468.55291061261585
+2024-09-06,Flash Awareness - Ramirez-Lewis,275.59,670,62560,18.0,602.4251707876489
+2024-09-07,Flash Awareness - Ramirez-Lewis,52.553,127,11858,3.0,100.40419513127482
+2024-09-08,Flash Awareness - Ramirez-Lewis,44.06,107,9991,2.0,66.93613008751655
+2024-09-09,Flash Awareness - Ramirez-Lewis,485.059,0,110181,32.0,1070.9780814002647
+2024-09-10,Flash Awareness - Ramirez-Lewis,434.392,1057,98696,29.0,970.5738862689899
+2024-09-11,Flash Awareness - Ramirez-Lewis,378.39,921,85997,25.0,836.7016260939569
+2024-09-12,Flash Awareness - Ramirez-Lewis,263.58,641,59853,17.0,568.9571057438907
+2024-09-13,Flash Awareness - Ramirez-Lewis,169.318,412,38470,11.0,368.148715481341
+2024-09-14,Flash Awareness - Ramirez-Lewis,65.0299,158,14753,4.0,133.8722601750331
+2024-09-15,Flash Awareness - Ramirez-Lewis,80.04,194,18114,5.0,167.34032521879135
+2024-09-16,Flash Awareness - Ramirez-Lewis,319.69,0,72645,,702.8293659189237
+2024-09-17,Flash Awareness - Ramirez-Lewis,385.8384,939,87678,26.0,870.1696911377151
+2024-09-18,Flash Awareness - Ramirez-Lewis,364.079,886,82729,24.0,803.2335610501985
+2024-09-19,Flash Awareness - Ramirez-Lewis,211.97,515,48087,14.0,468.55291061261585
+2024-09-20,Flash Awareness - Ramirez-Lewis,481.95,1173,109528,32.0,1070.9780814002647
+2024-09-21,Flash Awareness - Ramirez-Lewis,158.06,384,35855,10.0,334.6806504375827
+2024-09-22,Flash Awareness - Ramirez-Lewis,128.7,313,29226,8.0,267.7445203500662
+2024-09-23,Flash Awareness - Ramirez-Lewis,344.688,838,78247,23.0,769.7654960064402
+2024-09-24,Flash Awareness - Ramirez-Lewis,267.84,651,60786,18.0,602.4251707876489
+2024-09-25,Flash Awareness - Ramirez-Lewis,199.092,484,45193,13.0,435.08484556885753
+2024-09-26,Flash Awareness - Ramirez-Lewis,242.39,589,54997,16.0,535.4890407001324
+2024-09-27,Flash Awareness - Ramirez-Lewis,403.138,0,91600,,903.6377561814734
+2024-09-28,Flash Awareness - Ramirez-Lewis,42.3,102,9524,2.0,66.93613008751655
+2024-09-29,Flash Awareness - Ramirez-Lewis,58.57,142,13259,3.0,100.40419513127482
+2024-09-30,Flash Awareness - Ramirez-Lewis,118.401,288,26891,8.0,267.7445203500662
+2024-10-01,Flash Awareness - Ramirez-Lewis,116.29,283,26424,7.0,234.27645530630792
+2024-10-02,Flash Awareness - Ramirez-Lewis,442.184,1076,100471,29.0,970.5738862689899
+2024-10-03,Flash Awareness - Ramirez-Lewis,381.463,928,86651,25.0,836.7016260939569
+2024-10-04,Flash Awareness - Ramirez-Lewis,289.67,705,65829,19.0,635.8932358314072
+2024-10-05,Flash Awareness - Ramirez-Lewis,55.653,135,12605,3.0,100.40419513127482
+2024-10-06,Flash Awareness - Ramirez-Lewis,118.659,288,26891,8.0,267.7445203500662
+2024-10-07,Flash Awareness - Ramirez-Lewis,289.3887,704,65735,19.0,635.8932358314072
+2024-10-08,Flash Awareness - Ramirez-Lewis,169.2807,412,38470,11.0,368.148715481341
+2024-10-09,Flash Awareness - Ramirez-Lewis,273.5407,665,62094,18.0,602.4251707876489
+2024-10-10,Flash Awareness - Ramirez-Lewis,259.4019,631,58919,17.0,568.9571057438907
+2024-10-11,Flash Awareness - Ramirez-Lewis,346.34,842,78621,23.0,769.7654960064402
+2024-10-12,Flash Awareness - Ramirez-Lewis,141.615,344,32120,9.0,301.21258539382444
+2024-10-13,Flash Awareness - Ramirez-Lewis,47.25,115,10738,3.0,100.40419513127482
+2024-10-14,Flash Awareness - Ramirez-Lewis,249.85,608,56771,16.0,535.4890407001324
+2024-10-15,Flash Awareness - Ramirez-Lewis,350.344,852,79555,23.0,769.7654960064402
+2024-10-16,Flash Awareness - Ramirez-Lewis,301.25,733,68443,20.0,669.3613008751654
+2024-10-17,Flash Awareness - Ramirez-Lewis,442.6,1077,100564,29.0,970.5738862689899
+2024-10-18,Flash Awareness - Ramirez-Lewis,363.4775,884,82543,24.0,803.2335610501985
+2024-10-19,Flash Awareness - Ramirez-Lewis,66.0695,160,14939,4.0,133.8722601750331
+2024-10-20,Flash Awareness - Ramirez-Lewis,51.291,124,11578,3.0,100.40419513127482
+2024-10-21,Flash Awareness - Ramirez-Lewis,356.97,868,81049,24.0,803.2335610501985
+2024-10-22,Flash Awareness - Ramirez-Lewis,110.6045,269,25117,7.0,234.27645530630792
+2024-10-23,Flash Awareness - Ramirez-Lewis,334.31,0,75913,,736.297430962682
+2024-10-24,Flash Awareness - Ramirez-Lewis,476.09,1158,108127,32.0,1070.9780814002647
+2024-10-25,Flash Awareness - Ramirez-Lewis,330.19,803,74979,22.0,736.297430962682
+2024-10-26,Flash Awareness - Ramirez-Lewis,102.1072,248,23156,6.0,200.80839026254964
+2024-10-27,Flash Awareness - Ramirez-Lewis,142.926,347,32400,9.0,301.21258539382444
+2024-10-28,Flash Awareness - Ramirez-Lewis,283.3012,689,64335,19.0,635.8932358314072
+2024-10-29,Flash Awareness - Ramirez-Lewis,318.2467,774,72271,21.0,702.8293659189237
+2024-10-30,Flash Awareness - Ramirez-Lewis,476.59,1160,108314,32.0,1070.9780814002647
+2024-10-31,Flash Awareness - Ramirez-Lewis,254.44,619,57798,17.0,568.9571057438907
