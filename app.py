@@ -42,7 +42,6 @@ if "theme_mode" not in st.session_state:
 if "pending_demo_files" not in st.session_state:
     st.session_state.pending_demo_files = []
 
-
 # --- Sidebar ---
 with st.sidebar:
     st.title("📊 Marketing ROI Tracker")
@@ -50,14 +49,14 @@ with st.sidebar:
 
     # Light/Dark mode toggle
     is_dark_mode = st.toggle(
-        "Dark Mode", 
+        "Dark Mode",
         value=(st.session_state.theme_mode == "dark"),
         help="Toggle between light and dark interface themes."
     )
     st.session_state.theme_mode = "dark" if is_dark_mode else "light"
 
     st.markdown("### Data Ingestion")
-    
+
     uploaded_files = st.file_uploader(
         "Upload CSV Exports",
         type=["csv"],
@@ -77,7 +76,6 @@ with st.sidebar:
     st.markdown("---")
     st.caption("v1.0.0 | Enterprise Edition")
 
-
 # --- Data Processing Orchestration ---
 def process_file(file_obj: Path | Any, filename: str) -> None:
     """
@@ -92,8 +90,9 @@ def process_file(file_obj: Path | Any, filename: str) -> None:
         platform = detect_platform(df)
 
         # Validate platform detection using match/case
+        # FIX: "facebook" not "facebook_ads" — matches csv_detector.py's actual return value
         match platform:
-            case "google_ads" | "facebook_ads" | "email" | "seo":
+            case "google_ads" | "facebook" | "email" | "seo":
                 pass  # Supported platform
             case unknown_platform:
                 st.error(
@@ -106,9 +105,10 @@ def process_file(file_obj: Path | Any, filename: str) -> None:
         # Normalize to unified schema
         normalized_df = normalize_to_unified_schema(df, platform)
 
-        # Validate the normalized schema
-        is_valid, validation_errors = validate_schema(normalized_df)
-        if not is_valid:
+        # FIX: validate_schema returns list[str] (errors only), not a 2-tuple.
+        # Empty list = valid, non-empty list = validation errors.
+        validation_errors = validate_schema(normalized_df)
+        if validation_errors:
             st.error(
                 f"The data in '{filename}' was processed but contains structural "
                 f"issues: {validation_errors}. Please review your source export settings."
@@ -151,7 +151,6 @@ def process_file(file_obj: Path | Any, filename: str) -> None:
             f"Please try re-exporting the file from your ad platform."
         )
 
-
 # Process newly uploaded files
 if uploaded_files:
     for file in uploaded_files:
@@ -166,7 +165,6 @@ if st.session_state.pending_demo_files:
     # Clear pending demo files to prevent reprocessing on subsequent reruns
     st.session_state.pending_demo_files = []
 
-
 # --- Main Area Layout ---
 st.title("Unified Marketing Analytics")
 
@@ -177,16 +175,16 @@ if st.session_state.unified_data.empty:
     )
 else:
     tab1, tab2, tab3, tab4 = st.tabs([
-        "Overview Dashboard", 
-        "Channel Comparison", 
-        "Budget Optimizer", 
+        "Overview Dashboard",
+        "Channel Comparison",
+        "Budget Optimizer",
         "Raw Data"
     ])
 
     with tab1:
         st.header("Overview Dashboard")
         st.markdown("High-level performance metrics across all integrated channels.")
-        
+
         # TODO: Insert KPI cards (Total Spend, Total Revenue, Overall ROAS, Overall CPA)
         # TODO: Insert Sankey chart showing budget flow from channels to conversions
         # TODO: Insert Time-series line chart for daily ROI trends
@@ -194,7 +192,7 @@ else:
     with tab2:
         st.header("Channel Comparison")
         st.markdown("Side-by-side performance analysis of your marketing channels.")
-        
+
         # TODO: Insert grouped bar chart comparing ROAS and CPA across platforms
         # TODO: Insert pie chart showing budget distribution by channel
         # TODO: Insert scatter plot of Spend vs. Revenue per channel
@@ -202,7 +200,7 @@ else:
     with tab3:
         st.header("Budget Optimizer")
         st.markdown("AI-driven recommendations for optimal budget allocation.")
-        
+
         # TODO: Insert marginal ROAS curve chart
         # TODO: Insert budget reallocation recommendation table
         # TODO: Insert scenario simulator sliders and projected ROI chart
@@ -210,10 +208,10 @@ else:
     with tab4:
         st.header("Raw Data")
         st.markdown("The fully normalized and unified dataset ready for deep-dive analysis.")
-        
+
         st.dataframe(
-            st.session_state.unified_data, 
-            use_container_width=True, 
+            st.session_state.unified_data,
+            use_container_width=True,
             height=600
         )
-        # TODO: Insert download button for the unified dataframe (CSV/Parquet)
+        # TODO: Insert download button for the unified dataframe (CSV/Parquet)\n
