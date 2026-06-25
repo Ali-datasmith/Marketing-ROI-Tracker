@@ -1,10 +1,10 @@
 """
 Data Normalizers for MarketingROITracker.
 
-This module is responsible for transforming raw, platform-specific CSV DataFrames 
-into a single, unified schema (ChannelRecord). It handles column renaming, 
-flexible date parsing, numeric coercion, and the resolution of common data 
-imperfections (e.g., missing values, inconsistent decimal precision). 
+This module is responsible for transforming raw, platform-specific CSV DataFrames
+into a single, unified schema (ChannelRecord). It handles column renaming,
+flexible date parsing, numeric coercion, and the resolution of common data
+imperfections (e.g., missing values, inconsistent decimal precision).
 
 It does NOT perform strict schema validation or business logic calculations.
 """
@@ -17,48 +17,43 @@ from dateutil import parser as dateutil_parser
 
 from config.settings import ChannelName
 
-# Configure module-level logger
 logger = logging.getLogger(__name__)
 
 
 def _coerce_numeric(
-    series: pd.Series, 
-    target_dtype: type[int] | type[float], 
-    col_name: str, 
+    series: pd.Series,
+    target_dtype: type[int] | type[float],
+    col_name: str,
     is_currency: bool = False
 ) -> pd.Series:
     """
-    Coerces a pandas Series to a numeric type, handling missing values and 
+    Coerces a pandas Series to a numeric type, handling missing values and
     inconsistent decimal precision.
     """
-    # Convert to numeric, forcing unparseable values to NaN
     numeric_series = pd.to_numeric(series, errors="coerce")
-    
-    # Use walrus operator to check for and log missing values concisely
+
     if (missing_count := numeric_series.isna().sum()) > 0:
         logger.warning(
             f"Column '{col_name}' contained {missing_count} missing/blank values. "
             f"These have been filled with 0."
         )
         numeric_series = numeric_series.fillna(0)
-        
+
     if target_dtype is int:
         return numeric_series.astype(int)
-    
-    # Round currency fields to 2 decimal places to fix inconsistent precision
+
     if is_currency:
         numeric_series = numeric_series.round(2)
-        
+
     return numeric_series.astype(float)
 
 
 def _parse_dates_flexible(series: pd.Series) -> pd.Series:
     """
     Parses a Series of date strings into datetime objects using python-dateutil.
-    This avoids hardcoding specific strftime formats and gracefully handles 
+    This avoids hardcoding specific strftime formats and gracefully handles
     mixed or drifting date formats across different platform exports.
     """
-    # Apply dateutil's parser to handle arbitrary date formats, then convert to pandas datetime
     return pd.to_datetime(series.apply(dateutil_parser.parse))
 
 
@@ -98,8 +93,7 @@ def normalize_email(df: pd.DataFrame) -> pd.DataFrame:
         "campaign_name": df["Campaign"].astype(str),
         "spend": _coerce_numeric(df["Cost"], float, "Cost", is_currency=True),
         "clicks": _coerce_numeric(df["Clicks"], int, "Clicks"),
-        # Map 'Opens' to 'impressions' for the unified schema context
-        "impressions": _coerce_numeric(df["Opens"], int, "Opens"), 
+        "impressions": _coerce_numeric(df["Opens"], int, "Opens"),
         "conversions": _coerce_numeric(df["Conversions"], int, "Conversions"),
         "revenue": _coerce_numeric(df["Revenue"], float, "Revenue", is_currency=True),
     })
@@ -121,9 +115,9 @@ def normalize_seo(df: pd.DataFrame) -> pd.DataFrame:
 
 def normalize_to_unified_schema(df: pd.DataFrame, platform: ChannelName) -> pd.DataFrame:
     """
-    Dispatcher function that routes the DataFrame to the correct platform-specific 
+    Dispatcher function that routes the DataFrame to the correct platform-specific
     normalizer based on the detected ChannelName.
-    
+
     Returns a DataFrame strictly conforming to the unified ChannelRecord schema.
     """
     match platform:
