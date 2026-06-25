@@ -1,8 +1,8 @@
 """
 CSV Platform Detector for MarketingROITracker.
 
-This module is responsible solely for identifying the source marketing platform 
-of an uploaded CSV file based on its column headers. It does not perform any 
+This module is responsible solely for identifying the source marketing platform
+of an uploaded CSV file based on its column headers. It does not perform any
 data normalization, transformation, or validation.
 """
 
@@ -24,19 +24,17 @@ SUPPORTED_PLATFORMS: tuple[ChannelName, ...] = ("google_ads", "facebook", "email
 
 def _normalize_column(col: str) -> str:
     """
-    Normalizes a single column name by lowercasing, stripping whitespace, 
+    Normalizes a single column name by lowercasing, stripping whitespace,
     and removing punctuation to ensure consistent matching.
     """
-    # Remove all standard punctuation characters
     col = col.translate(str.maketrans('', '', string.punctuation))
-    # Lowercase and collapse multiple spaces into a single space
     return ' '.join(col.lower().split())
 
 
 def fingerprint_headers(columns: list[str]) -> str:
     """
     Generates a stable signature string from a list of column headers.
-    The signature is created by normalizing each column name and joining 
+    The signature is created by normalizing each column name and joining
     them in sorted order, separated by a pipe character.
     """
     normalized = sorted([_normalize_column(c) for c in columns])
@@ -45,16 +43,15 @@ def fingerprint_headers(columns: list[str]) -> str:
 
 def confidence_score(columns: list[str], platform: ChannelName) -> float:
     """
-    Calculates a confidence score (0.0 to 1.0) indicating how well the 
+    Calculates a confidence score (0.0 to 1.0) indicating how well the
     provided columns match the expected signature for a given platform.
     """
     normalized_cols = {_normalize_column(c) for c in columns}
     expected = EXPECTED_COLUMNS.get(platform, set())
-    
+
     if not expected:
         return 0.0
-        
-    # Calculate the intersection of actual and expected columns
+
     matches = len(normalized_cols.intersection(expected))
     return matches / len(expected)
 
@@ -62,15 +59,14 @@ def confidence_score(columns: list[str], platform: ChannelName) -> float:
 def detect_platform(df: pd.DataFrame) -> ChannelName | None:
     """
     Detects the marketing platform of a DataFrame based on its column headers.
-    Uses exact structural pattern matching first, falling back to a confidence 
+    Uses exact structural pattern matching first, falling back to a confidence
     scoring method if the headers are slightly modified, incomplete, or contain extras.
-    
+
     Returns the detected ChannelName, or None if no platform can be confidently identified.
     """
     columns = df.columns.tolist()
     fingerprint = fingerprint_headers(columns)
-    
-    # Core detection logic using Python 3.10+ structural pattern matching
+
     match fingerprint:
         case "campaign|clicks|conversions|conv value|cost|day|impressions":
             return "google_ads"
@@ -81,19 +77,16 @@ def detect_platform(df: pd.DataFrame) -> ChannelName | None:
         case "assisted revenue|date|goal completions|organic clicks|organic cost|organic impressions|pagecampaign":
             return "seo"
         case _:
-            # Fallback: Calculate confidence scores for all platforms if exact match fails
             best_platform: ChannelName | None = None
             best_score: float = 0.0
-            
+
             for platform in SUPPORTED_PLATFORMS:
                 score = confidence_score(columns, platform)
                 if score > best_score:
                     best_score = score
                     best_platform = platform
-            
-            # Require a minimum confidence threshold (70%) to avoid false positives
-            # on completely unrelated CSV files
+
             if best_score >= 0.70:
                 return best_platform
-                
+
             return None
