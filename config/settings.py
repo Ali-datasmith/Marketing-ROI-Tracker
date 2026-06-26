@@ -9,8 +9,10 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import TypeAlias, Literal
 
+
 # --- Type Aliases ---
 ChannelName: TypeAlias = Literal["google_ads", "facebook", "email", "seo"]
+
 
 # --- Color Mappings ---
 CHANNEL_COLORS: dict[ChannelName, str] = {
@@ -19,6 +21,7 @@ CHANNEL_COLORS: dict[ChannelName, str] = {
     "email": "#F59E0B",
     "seo": "#10B981",
 }
+
 
 # --- Theme Configurations ---
 @dataclass(slots=True, frozen=True)
@@ -35,6 +38,7 @@ class ThemeConfig:
     font_ui: str
     font_numeric: str
 
+
 THEME: ThemeConfig = ThemeConfig(
     background="#0B0E14",
     surface="#13161F",
@@ -47,6 +51,7 @@ THEME: ThemeConfig = ThemeConfig(
     font_ui="Inter, sans-serif",
     font_numeric="'JetBrains Mono', monospace",
 )
+
 
 LIGHT_THEME: ThemeConfig = ThemeConfig(
     background="#F8FAFC",
@@ -61,6 +66,7 @@ LIGHT_THEME: ThemeConfig = ThemeConfig(
     font_numeric="'JetBrains Mono', monospace",
 )
 
+
 # --- Unified Data Schema ---
 @dataclass(slots=True)
 class ChannelRecord:
@@ -74,6 +80,7 @@ class ChannelRecord:
     conversions: int
     revenue: float
 
+
 REQUIRED_COLUMNS: list[str] = [
     "date",
     "channel",
@@ -85,10 +92,15 @@ REQUIRED_COLUMNS: list[str] = [
     "revenue",
 ]
 
+
 # --- Demo Data Paths ---
+# NOTE: filenames here must exactly match the files produced by
+# generate_demo_data.py (data/sample_<platform>.csv). The "facebook" entry
+# previously pointed to "data/sample_facebook.csv", which does not exist —
+# the generator script writes "data/sample_facebook_ads.csv". Fixed below.
 DEMO_DATA_PATHS: dict[ChannelName, str] = {
     "google_ads": "data/sample_google_ads.csv",
-    "facebook": "data/sample_facebook.csv",
+    "facebook": "data/sample_facebook_ads.csv",
     "email": "data/sample_email.csv",
     "seo": "data/sample_seo.csv",
 }
