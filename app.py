@@ -9,29 +9,26 @@ computation, and chart rendering to specialized modules, ensuring a clean
 separation of concerns between UI orchestration and business logic.
 """
 
-import streamlit as st
-import pandas as pd
 from pathlib import Path
 from typing import Any
 
-from ui.theme import inject_custom_css
+import pandas as pd
+import streamlit as st
+from analytics.metrics import compute_efficiency_score
+from analytics.optimizer import run_optimization
+from database.duckdb_engine import create_unified_view, get_connection, register_channel_tables
+from database.queries import get_channel_summary, get_spend_revenue_flow, get_week_over_week
 from ingestion.csv_detector import detect_platform
 from ingestion.normalizers import normalize_to_unified_schema
 from ingestion.validators import validate_schema
-
-from database.duckdb_engine import get_connection, register_channel_tables, create_unified_view
-from database.queries import get_channel_summary, get_spend_revenue_flow, get_week_over_week
-
-from analytics.metrics import compute_efficiency_score
-from analytics.optimizer import run_optimization
-
-from visuals.kpi_cards import render_kpi_row
-from visuals.sankey_chart import build_spend_to_revenue_sankey
+from ui.theme import inject_custom_css
 from visuals.charts import (
-    build_channel_bar_comparison,
     build_budget_pie,
+    build_channel_bar_comparison,
     build_current_vs_suggested_comparison,
 )
+from visuals.kpi_cards import render_kpi_row
+from visuals.sankey_chart import build_spend_to_revenue_sankey
 
 # --- Page Configuration & Theme ---
 st.set_page_config(
