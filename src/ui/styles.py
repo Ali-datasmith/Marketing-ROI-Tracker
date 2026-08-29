@@ -2,17 +2,17 @@ import streamlit as st
 
 
 def inject_custom_css() -> None:
-    """Inject dark command-center CSS with cyan accents and glassmorphic panels."""
+    """Inject dark command-center CSS with cyan accents and emergent glassmorphic panels."""
     custom_css = """
     <style>
     :root {
         --bg-primary: #0B0F19;
         --bg-card: rgba(21, 29, 46, 0.7);
         --accent-cyan: #00E5FF;
-        --accent-glow: rgba(0, 229, 255, 0.2);
+        --accent-glow: rgba(0, 229, 255, 0.25);
         --text-primary: #F8FAFC;
         --text-secondary: #94A3B8;
-        --border-glass: rgba(255, 255, 255, 0.1);
+        --border-glass: rgba(0, 229, 255, 0.15);
     }
 
     .stApp {
@@ -27,14 +27,26 @@ def inject_custom_css() -> None:
     }
 
     .glass-card {
-        background: var(--bg-card);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid var(--border-glass);
-        border-radius: 12px;
-        padding: 20px;
-        margin-bottom: 20px;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        background: radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.12) 0%, rgba(13, 19, 34, 0.85) 70%);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(0, 229, 255, 0.3);
+        border-radius: 16px;
+        padding: 24px;
+        margin-bottom: 24px;
+        box-shadow: 0 0 35px 2px rgba(0, 229, 255, 0.15), 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .glass-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #00E5FF, transparent);
     }
 
     .kpi-card {
