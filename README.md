@@ -21,6 +21,23 @@
 
 ---
 
+## ☁️ Streamlit Community Cloud Deployment
+
+This repository is optimized for 1-click deployment on **Streamlit Community Cloud**:
+
+1. Fork or push this repository to GitHub.
+2. Sign in to [share.streamlit.io](https://share.streamlit.io).
+3. Connect your repository and configure:
+   - **Main file path**: `app.py`
+   - **Python version**: `3.12`
+4. *(Optional)* In Advanced Settings -> Secrets, add your Gemini API key:
+   ```toml
+   GEMINI_API_KEY = "your-api-key-here"
+   ```
+5. Click **Deploy!**
+
+---
+
 ## 🏛️ System Architecture Diagram
 
 ```
