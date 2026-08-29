@@ -68,23 +68,18 @@ if "ai_active" not in st.session_state:
 
 # --- AUTHENTICATION GATE ---
 if not st.session_state.authenticated:
-    st.markdown(
-        """
-        <div style="text-align: center; padding-top: 50px; padding-bottom: 30px;">
-            <h1 style="color: #00E5FF; font-size: 2.8rem; margin-bottom: 0px;">⚡ MARKETING ROI ENGINE</h1>
-            <p style="color: #94A3B8; font-size: 1.1rem;">Enterprise B2B Multi-Touch Attribution & Budget Optimization Platform</p>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    col1, col2, col3 = st.columns([1, 1.2, 1])
+    st.markdown("<div style='padding-top: 30px;'></div>", unsafe_allow_html=True)
+    col1, col2, col3 = st.columns([1, 1.4, 1])
 
     with col2:
         st.markdown(
             """
             <div class="glass-card">
-                <h3 style="color: #F8FAFC; text-align: center; margin-bottom: 20px;">Executive Access Gate</h3>
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <h1 style="color: #00E5FF; font-size: 2.4rem; margin-bottom: 4px; font-weight: 800;">⚡ MARKETING ROI ENGINE</h1>
+                    <p style="color: #94A3B8; font-size: 1.0rem; margin-bottom: 12px;">Enterprise B2B Multi-Touch Attribution & Budget Optimization Platform</p>
+                    <h3 style="color: #F8FAFC; margin-top: 12px; margin-bottom: 0px; font-size: 1.2rem;">Executive Access Gate</h3>
+                </div>
             """,
             unsafe_allow_html=True,
         )
@@ -93,6 +88,10 @@ if not st.session_state.authenticated:
 
         with login_tab:
             username_input = st.text_input("Username", value="admin")
+            st.markdown(
+                '<div class="demo-credentials-badge">💡 DEMO CREDENTIALS: admin / admin123</div>',
+                unsafe_allow_html=True,
+            )
             password_input = st.text_input("Password", type="password")
 
             if st.button("Sign In", width="stretch"):

@@ -32,7 +32,7 @@ def inject_custom_css() -> None:
         -webkit-backdrop-filter: blur(16px);
         border: 1px solid rgba(0, 229, 255, 0.3);
         border-radius: 16px;
-        padding: 24px;
+        padding: 28px;
         margin-bottom: 24px;
         box-shadow: 0 0 35px 2px rgba(0, 229, 255, 0.15), 0 8px 32px 0 rgba(0, 0, 0, 0.5);
         position: relative;
@@ -47,6 +47,35 @@ def inject_custom_css() -> None:
         right: 0;
         height: 2px;
         background: linear-gradient(90deg, transparent, #00E5FF, transparent);
+    }
+
+    /* Active Tab Indicator Accent Color Override to Electric Cyan */
+    button[data-baseweb="tab"][aria-selected="true"] {
+        color: #00E5FF !important;
+    }
+
+    [data-baseweb="tab-highlight"] {
+        background-color: #00E5FF !important;
+    }
+
+    /* Input Field Focus Glow Override */
+    div[data-baseweb="input"]:focus-within {
+        border-color: #00E5FF !important;
+        box-shadow: 0 0 8px rgba(0, 229, 255, 0.4) !important;
+    }
+
+    /* Demo Credentials Helper Badge */
+    .demo-credentials-badge {
+        font-size: 0.78rem;
+        color: #00E5FF;
+        background: rgba(0, 229, 255, 0.1);
+        border: 1px solid rgba(0, 229, 255, 0.25);
+        border-radius: 6px;
+        padding: 4px 10px;
+        margin-top: 4px;
+        margin-bottom: 12px;
+        display: inline-block;
+        font-weight: 500;
     }
 
     .kpi-card {
