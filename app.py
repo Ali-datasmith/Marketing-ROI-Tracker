@@ -95,7 +95,7 @@ if not st.session_state.authenticated:
             username_input = st.text_input("Username", value="admin")
             password_input = st.text_input("Password", type="password")
 
-            if st.button("Sign In", use_container_width=True):
+            if st.button("Sign In", width="stretch"):
                 if username_input == "admin" and verify_password(DEFAULT_ADMIN_HASH, password_input):
                     st.session_state.authenticated = True
                     st.session_state.user_session = UserSession.admin_user()
@@ -106,7 +106,7 @@ if not st.session_state.authenticated:
 
         with recruiter_tab:
             st.info("Bypasses password verification with read-only executive sandbox permissions.")
-            if st.button("🚀 1-Click Recruiter Demo Access", use_container_width=True):
+            if st.button("🚀 1-Click Recruiter Demo Access", width="stretch"):
                 st.session_state.authenticated = True
                 st.session_state.user_session = UserSession.demo_user()
                 st.success("Welcome Recruiter! Demo access granted.")
@@ -138,7 +138,7 @@ with st.sidebar:
         help="Upload exports from Google Ads, Meta Ads, TikTok, Email, or SEO tools.",
     )
 
-    if st.button("📂 Load Enterprise Demo Dataset", use_container_width=True):
+    if st.button("📂 Load Enterprise Demo Dataset", width="stretch"):
         demo_dir = Path("data")
         demo_files = list(demo_dir.glob("*.csv"))
         if demo_files:
@@ -164,7 +164,7 @@ with st.sidebar:
         st.session_state.gemini_api_key = api_key_input
 
     st.markdown("---")
-    if st.button("🚪 Logout", use_container_width=True):
+    if st.button("🚪 Logout", width="stretch"):
         st.session_state.authenticated = False
         st.session_state.user_session = None
         st.session_state.unified_df = pl.DataFrame()
@@ -225,7 +225,7 @@ with tab1:
             st.subheader("Channel Efficiency Summary")
             st.dataframe(
                 blended_df,
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
                 column_config={
                     "total_spend": st.column_config.NumberColumn("Total Spend ($)", format="$%.2f"),
@@ -246,7 +246,7 @@ with tab2:
         st.markdown("#### Attribution Breakdown Table")
         st.dataframe(
             attr_df,
-            use_container_width=True,
+            width="stretch",
             hide_index=True,
             column_config={
                 "spend": st.column_config.NumberColumn("Spend ($)", format="$%.2f"),
@@ -337,7 +337,7 @@ with tab3:
                 data=pdf_bytes,
                 file_name="Marketing_ROI_Executive_Brief.pdf",
                 mime="application/pdf",
-                use_container_width=True,
+                width="stretch",
             )
 
 with tab4:
@@ -357,6 +357,6 @@ with tab5:
             st.error(f"Schema Validation Issue: {e}")
 
         st.markdown("#### Normalized Polars DataFrame")
-        st.dataframe(st.session_state.unified_df.to_pandas(), use_container_width=True)
+        st.dataframe(st.session_state.unified_df.to_pandas(), width="stretch")
     else:
         st.info("No active dataset loaded.")

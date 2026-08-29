@@ -93,7 +93,7 @@ def render_attribution_chart(attr_df: pd.DataFrame) -> None:
         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
     )
 
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 
 def render_time_series_chart(ts_df: pd.DataFrame) -> None:
@@ -118,7 +118,7 @@ def render_time_series_chart(ts_df: pd.DataFrame) -> None:
         yaxis=dict(gridcolor="rgba(255,255,255,0.1)"),
     )
 
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 
 def render_budget_simulator(blended_df: pd.DataFrame) -> dict[str, float]:
