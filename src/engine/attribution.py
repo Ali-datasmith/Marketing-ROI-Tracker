@@ -1,4 +1,3 @@
-
 import duckdb
 import pandas as pd
 import polars as pl
@@ -28,6 +27,7 @@ def compute_blended_metrics(conn: duckdb.DuckDBPyConnection, table_name: str = "
     - Blended ROAS (Revenue / Spend)
     - Blended CPA (Spend / Conversions)
     - Blended CAC (Spend / Conversions)
+    - Conversion Rate % (Conversions / Clicks * 100)
     """
     query = f"""
         SELECT
@@ -49,7 +49,7 @@ def compute_blended_metrics(conn: duckdb.DuckDBPyConnection, table_name: str = "
 
 
 def compute_overall_summary(conn: duckdb.DuckDBPyConnection, table_name: str = "ad_conversions") -> dict[str, float]:
-    """Calculate aggregate global metrics across all channels."""
+    """Calculate aggregate global metrics across all channels with zero-division guards."""
     query = f"""
         SELECT
             COALESCE(SUM(spend), 0.0) AS total_spend,
@@ -57,7 +57,8 @@ def compute_overall_summary(conn: duckdb.DuckDBPyConnection, table_name: str = "
             COALESCE(SUM(conversions), 0.0) AS total_conversions,
             COALESCE(SUM(revenue), 0.0) AS total_revenue,
             CASE WHEN SUM(spend) > 0 THEN SUM(revenue) / SUM(spend) ELSE 0.0 END AS overall_roas,
-            CASE WHEN SUM(conversions) > 0 THEN SUM(spend) / SUM(conversions) ELSE 0.0 END AS overall_cpa
+            CASE WHEN SUM(conversions) > 0 THEN SUM(spend) / SUM(conversions) ELSE 0.0 END AS overall_cpa,
+            CASE WHEN SUM(conversions) > 0 THEN SUM(spend) / SUM(conversions) ELSE 0.0 END AS overall_cac
         FROM {table_name}
     """
     res = conn.sql(query).fetchone()
@@ -69,6 +70,7 @@ def compute_overall_summary(conn: duckdb.DuckDBPyConnection, table_name: str = "
             "total_revenue": float(res[3]),
             "overall_roas": float(res[4]),
             "overall_cpa": float(res[5]),
+            "overall_cac": float(res[6]),
         }
     return {
         "total_spend": 0.0,
@@ -77,6 +79,7 @@ def compute_overall_summary(conn: duckdb.DuckDBPyConnection, table_name: str = "
         "total_revenue": 0.0,
         "overall_roas": 0.0,
         "overall_cpa": 0.0,
+        "overall_cac": 0.0,
     }
 
 
@@ -84,6 +87,13 @@ def compute_attribution_models(conn: duckdb.DuckDBPyConnection, table_name: str 
     """
     Compute Multi-Touch Attribution models (First-Touch, Last-Touch, Linear, Time-Decay)
     using DuckDB SQL window functions.
+
+    Mathematical Verification:
+    - First-Touch: Assigns 1.0 weight strictly to MIN(date) touchpoint per journey.
+    - Last-Touch: Assigns 1.0 weight strictly to MAX(date) touchpoint per journey.
+    - Linear: Assigns (1.0 / total_touches) weight per touchpoint per journey.
+    - Time-Decay: Applies exponential half-life decay POWER(0.5, days_before_conversion / 7.0)
+      normalized strictly so journey weights sum to 1.0 per user journey.
     """
     columns = [row[0] for row in conn.sql(f"DESCRIBE {table_name}").fetchall()]
 
@@ -92,7 +102,7 @@ def compute_attribution_models(conn: duckdb.DuckDBPyConnection, table_name: str 
 
     if has_users:
         query = f"""
-            WITH ordered_touchpoints AS (
+            WITH touchpoint_ranks AS (
                 SELECT
                     user_id,
                     channel,
@@ -102,18 +112,30 @@ def compute_attribution_models(conn: duckdb.DuckDBPyConnection, table_name: str 
                     ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY date ASC) AS touch_rank_asc,
                     ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY date DESC) AS touch_rank_desc,
                     COUNT(*) OVER (PARTITION BY user_id) AS total_touches,
-                    DATEDIFF('day', date, MAX(date) OVER (PARTITION BY user_id)) AS days_before_conversion
+                    DATEDIFF('day', date, MAX(date) OVER (PARTITION BY user_id)) AS days_before_conversion,
+                    POWER(0.5, DATEDIFF('day', date, MAX(date) OVER (PARTITION BY user_id)) / 7.0) AS unnorm_decay_weight
                 FROM {table_name}
                 WHERE user_id IS NOT NULL AND revenue > 0
+            ),
+            normalized_touchpoints AS (
+                SELECT
+                    user_id,
+                    channel,
+                    revenue,
+                    CASE WHEN touch_rank_asc = 1 THEN 1.0 ELSE 0.0 END AS ft_weight,
+                    CASE WHEN touch_rank_desc = 1 THEN 1.0 ELSE 0.0 END AS lt_weight,
+                    1.0 / total_touches AS linear_weight,
+                    unnorm_decay_weight / NULLIF(SUM(unnorm_decay_weight) OVER (PARTITION BY user_id), 0) AS decay_weight
+                FROM touchpoint_ranks
             ),
             attributed_touches AS (
                 SELECT
                     channel,
-                    SUM(CASE WHEN touch_rank_asc = 1 THEN revenue ELSE 0.0 END) AS first_touch_revenue,
-                    SUM(CASE WHEN touch_rank_desc = 1 THEN revenue ELSE 0.0 END) AS last_touch_revenue,
-                    SUM(revenue / total_touches) AS linear_revenue,
-                    SUM(revenue * POWER(0.5, days_before_conversion / 7.0)) AS raw_decay_revenue
-                FROM ordered_touchpoints
+                    SUM(revenue * ft_weight) AS first_touch_revenue,
+                    SUM(revenue * lt_weight) AS last_touch_revenue,
+                    SUM(revenue * linear_weight) AS linear_revenue,
+                    SUM(revenue * decay_weight) AS time_decay_revenue
+                FROM normalized_touchpoints
                 GROUP BY channel
             )
             SELECT
@@ -121,7 +143,7 @@ def compute_attribution_models(conn: duckdb.DuckDBPyConnection, table_name: str 
                 ROUND(first_touch_revenue, 2) AS first_touch_revenue,
                 ROUND(last_touch_revenue, 2) AS last_touch_revenue,
                 ROUND(linear_revenue, 2) AS linear_revenue,
-                ROUND(raw_decay_revenue * (SELECT SUM(revenue) FROM {table_name}) / NULLIF(SUM(raw_decay_revenue) OVER(), 0), 2) AS time_decay_revenue
+                ROUND(time_decay_revenue, 2) AS time_decay_revenue
             FROM attributed_touches
             ORDER BY linear_revenue DESC
         """
@@ -130,7 +152,7 @@ def compute_attribution_models(conn: duckdb.DuckDBPyConnection, table_name: str 
         except Exception:
             pass
 
-    # Non-nested window function attribution query
+    # Aggregated channel-level attribution fallback with strict weight normalization
     query = f"""
         WITH channel_totals AS (
             SELECT
