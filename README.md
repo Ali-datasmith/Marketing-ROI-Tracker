@@ -10,21 +10,30 @@
 
 ---
 
-## 🏛️ Executive Summary & System Overview
-
-**MARKETING ROI ENGINE (v2.0 Enterprise Edition)** is a production-grade, B2B Multi-Touch Attribution (MTA) & Budget Optimization Engine. Engineered to replace basic legacy marketing scripts with an enterprise analytics architecture, the platform synthesizes raw multi-platform ad spend exports (Google Ads, Meta Ads, TikTok Ads, Email Marketing, Organic SEO) into actionable C-suite revenue attribution intelligence.
-
-### Key Architectural Highlights
-- **Zero-Copy Ingestion**: Polars-powered CSV ingestion pipeline with automated platform signature detection, date string normalization, and currency string cleaning.
-- **Vectorized SQL Analytics**: In-memory DuckDB engine executing window functions for real-time calculation of **First-Touch**, **Last-Touch**, **Linear**, and **Time-Decay** attribution models alongside Blended CAC, CPA, and ROAS.
-- **Pydantic v2 Contract Validation**: Strict boundary schema contracts (`StandardAdRecord`, `UnifiedAdDataset`) ensuring structural integrity before DuckDB query execution.
-- **Gemini 3.5 AI Synthesis Engine**: Generative executive briefing powered by `google-genai` SDK targeting `gemini-3.5-flash` with native Pydantic structured JSON outputs (`MarketingInsightsReport`) and status-code-first error taxonomy (`CAT_QUOTA`, `CAT_AUTH`, `CAT_TIMEOUT`, `CAT_SCHEMA`).
-- **Argon2 Security Access Gate**: Enterprise Argon2id password hashing + 1-click **Recruiter Demo Access** for read-only sandbox evaluation.
-- **Glassmorphic Command Center UI**: Custom dark theme (`#0B0F19` background, `#00E5FF` cyan accents) featuring emergent lighting panels, Plotly MTA comparison charts, interactive diminishing-returns budget simulator, and FPDF2 dark executive PDF generation.
+```
+====================================================================================================
+                        MARKETING ROI & MULTI-TOUCH ATTRIBUTION COMMAND CENTER
+====================================================================================================
+[ Ingestion: Polars ] ---> [ Modeling: DuckDB SQL ] ---> [ AI Synthesis: Gemini 3.5 ] ---> [ Executive UI ]
+====================================================================================================
+```
 
 ---
 
-## 📐 End-to-End System Architecture
+## 1. Executive Summary & System Overview
+
+**MARKETING ROI ENGINE (v2.0 Enterprise Edition)** is a production-grade B2B Multi-Touch Attribution (MTA) & Budget Optimization Engine. Engineered to transform fragmented multi-channel marketing data into executive revenue intelligence, the platform normalizes raw exports from Google Ads, Meta Ads, TikTok Ads, Email Marketing, and Organic SEO into unified, audit-ready data contracts.
+
+### Core System Pillars
+- **Zero-Copy Data Ingestion**: High-throughput Polars CSV parser featuring dynamic platform signature detection, date standardization, and monetary string coercion.
+- **Vectorized In-Memory SQL Analytics**: In-memory DuckDB analytical engine executing window functions to calculate First-Touch, Last-Touch, Linear, and Time-Decay attribution models alongside Blended CAC, CPA, and ROAS.
+- **Resilient Structured AI Synthesis**: `google-genai` client targeting `gemini-3.5-flash` with native Pydantic schema validation (`MarketingInsightsReport`), `httpx` timeout limits, and `tenacity` exponential backoff retries.
+- **Argon2id Auth & Sandbox Gate**: Secure Argon2id password hashing paired with a 1-click **Recruiter Demo Access** bypass for instant read-only evaluation.
+- **Glassmorphic Command Center**: Dark Streamlit presentation layer (`#0B0F19` background, `#00E5FF` cyan glow accents), Plotly model comparison charts, diminishing-returns budget simulator, and FPDF2 executive C-suite PDF report exporter.
+
+---
+
+## 2. End-to-End System Architecture
 
 ```
 +-----------------------------------------------------------------------------------+
@@ -52,10 +61,10 @@
                        |                                   |
                        v                                   v
 +----------------------------------------+ +----------------------------------------+
-|      GEMINI 3.5 FLASH AI ENGINE        | |       STREAMLIT COMMAND CENTER UI      |
-|  - Structured Output via Pydantic v2   | |  - Emergent glassmorphic dark theme   |
-|  - Status-code-first error taxonomy    | |  - Argon2 auth + 1-Click Recruiter Demo |
-|  - C-suite executive performance report| |  - Interactive Budget Simulator        |
+|    GEMINI 3.5 FLASH + RESILIENCE      | |       STREAMLIT COMMAND CENTER UI      |
+|  - httpx timeout + tenacity retries    | |  - Emergent glassmorphic dark theme   |
+|  - Pydantic v2 structured JSON output  | |  - Argon2 auth + 1-Click Recruiter Demo |
+|  - Status-code-first error taxonomy    | |  - Interactive Budget Simulator        |
 +----------------------------------------+ +----------------------------------------+
                        |                                   |
                        +-----------------+-----------------+
@@ -68,20 +77,30 @@
 
 ---
 
-## 🔀 Multi-Touch Attribution Models
+## 3. Multi-Touch Attribution Models
 
-The DuckDB SQL engine executes four distinct attribution methodologies across marketing touchpoints:
+The DuckDB SQL engine executes four distinct mathematical attribution models across marketing touchpoints:
 
-| Model | Formula / Logic | Business Use Case |
+| Model | Formula / Logic | Business Evaluation Use Case |
 | :--- | :--- | :--- |
-| **First-Touch** | Attributes 100% credit to the initial acquisition channel (`DENSE_RANK() OVER (ORDER BY first_seen ASC)`) | Evaluating top-of-funnel brand awareness & demand generation. |
-| **Last-Touch** | Attributes 100% credit to the final converting channel (`DENSE_RANK() OVER (ORDER BY last_seen DESC)`) | Measuring bottom-of-funnel direct conversion efficiency. |
-| **Linear** | Distributes credit equally across all touchpoints in the journey | Balanced evaluation for long B2B sales cycles with multiple touchpoints. |
-| **Time-Decay** | Applies exponential decay weighting (`0.85 ^ days_before_conversion`) favoring recent interactions | Ideal for multi-week lead-to-opportunity conversions. |
+| **First-Touch** | Attributes 100% conversion value to initial touchpoint (`DENSE_RANK() OVER (ORDER BY first_seen ASC)`) | Evaluating top-of-funnel acquisition, organic brand discovery, and lead generation efficiency. |
+| **Last-Touch** | Attributes 100% conversion value to final touchpoint (`DENSE_RANK() OVER (ORDER BY last_seen DESC)`) | Measuring direct closing channels, retargeting performance, and bottom-of-funnel urgency. |
+| **Linear** | Distributes revenue credit evenly across all touched channels (`SUM(revenue / total_touches)`) | Evaluating full-cycle buyer journeys across multi-month enterprise B2B sales cycles. |
+| **Time-Decay** | Applies exponential decay weighting (`0.85 ^ days_before_conversion`) favoring recent interactions | Ideal for weighting recent sales interactions while maintaining historical touchpoint credit. |
 
 ---
 
-## 📁 Repository Directory Structure
+## 4. Key Technical Highlights
+
+- **Pydantic v2 Data Boundary Contracts**: All ingestion pipelines validate output against `StandardAdRecord` and `UnifiedAdDataset` models enforcing strict types, positive monetary constraints, and non-empty channel strings.
+- **Resilient AI Synthesis Pipeline**: Uses `tenacity` exponential backoff (`wait_exponential(min=2, max=10)`, `stop_after_attempt(3)`) to retry transient network and 429 rate-limit errors during Gemini API calls.
+- **Status-Code Error Taxonomy**: Maps API and validation errors to explicit error categories (`CAT_QUOTA`, `CAT_AUTH`, `CAT_TIMEOUT`, `CAT_SCHEMA`) with automatic fallback to deterministic mock reports when unauthenticated.
+- **Argon2id Password Security**: Uses `argon2-cffi` for password hashing and verification, protecting executive features while providing a isolated sandbox mode for recruiters.
+- **PDF Executive Brief Exporter**: Custom `FPDF2` generator producing dark-themed C-suite briefs with header accents, KPI blocks, and AI recommendations.
+
+---
+
+## 5. Directory Structure
 
 ```
 Marketing-ROI-Tracker/
@@ -99,7 +118,7 @@ Marketing-ROI-Tracker/
 │   │   └── attribution.py         # DuckDB SQL vectorized MTA window functions
 │   ├── ai/
 │   │   ├── __init__.py
-│   │   └── insights_engine.py     # Gemini 3.5 Flash client with Pydantic structured output
+│   │   └── insights_engine.py     # Gemini 3.5 Flash client with httpx & tenacity resilience
 │   ├── auth/
 │   │   ├── __init__.py
 │   │   └── security.py            # Argon2id password hashing & Recruiter Demo permissions
@@ -125,13 +144,13 @@ Marketing-ROI-Tracker/
 
 ---
 
-## 💻 Local Setup & Execution Guide
+## 6. Local Setup & Execution Guide
 
-### 1. Requirements
+### 1. Prerequisites
 - **Python**: 3.12 or 3.13
 - **Git**
 
-### 2. Environment Setup
+### 2. Virtual Environment Setup
 ```bash
 # Clone the repository
 git clone https://github.com/Ali-datasmith/Marketing-ROI-Tracker.git
@@ -139,24 +158,24 @@ cd Marketing-ROI-Tracker
 
 # Create virtual environment
 python3 -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-# Install dependencies
+# Install production dependencies
 pip install -r requirements.txt
 ```
 
-### 3. Launch Application
+### 3. Launch Local Development Server
 ```bash
 streamlit run app.py
 ```
 Open [http://localhost:8501](http://localhost:8501) in your browser.
 
-- **Recruiter Demo Access**: Click **"🚀 1-Click Recruiter Demo Access"** on the Executive Access Gate to bypass credentials with read-only sandbox permissions.
+- **Recruiter Demo Access**: Click **"🚀 1-Click Recruiter Demo Access"** on the Executive Access Gate for immediate sandbox evaluation.
 - **Admin Password**: `admin` / `admin123`.
 
 ---
 
-## ☁️ Streamlit Community Cloud Deployment
+## 7. Streamlit Community Cloud Deployment
 
 The repository includes dynamic `sys.path` resolution for `src/` inside `app.py` for zero-configuration Streamlit Community Cloud deployment:
 
@@ -173,9 +192,9 @@ The repository includes dynamic `sys.path` resolution for `src/` inside `app.py`
 
 ---
 
-## 🧪 Testing, Quality Gates & Security Scans
+## 8. Testing, Quality Gates & Security Scans
 
-The repository maintains 100% test passing rates and zero-warning linter compliance.
+The codebase maintains strict quality standards verified via automated CI pipelines:
 
 ```bash
 # Execute Pytest Unit Test Suite
@@ -190,6 +209,22 @@ mypy src/ --ignore-missing-imports
 
 ---
 
-## 📜 License
+## 9. System Limitations & Production Roadmap
+
+### In-Memory Analytics Boundary
+- **Current Architecture**: In-memory DuckDB and Polars engines process datasets locally on single-node Streamlit instances.
+- **Production Roadmap**: For datasets exceeding multi-gigabyte RAM constraints, transition DuckDB table registration to external distributed analytics engines (e.g., Snowflake, Trino, or BigQuery).
+
+### Rate Limit & Quota Resilience
+- **Current Architecture**: The AI synthesis layer leverages `tenacity` exponential backoff retries for 429 rate limits and 5xx errors, defaulting to a deterministic mock report upon quota exhaustion.
+- **Production Roadmap**: Implement a Redis-backed caching layer for generated executive reports to reduce redundant LLM calls across identical dataset states.
+
+### Batch CSV vs. Real-Time CDC Streaming
+- **Current Architecture**: Ingestion processes batch CSV exports from ad platform reporting portals.
+- **Production Roadmap**: Implement real-time Change Data Capture (CDC) streaming via Apache Kafka or Webhooks connected directly to Google Ads and Meta Marketing APIs.
+
+---
+
+## 10. License
 
 Distributed under the MIT License. See `LICENSE` for details.

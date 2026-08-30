@@ -1,7 +1,16 @@
+import logging
 import os
 
+import httpx
 from loguru import logger
 from pydantic import BaseModel, Field
+from tenacity import (
+    before_sleep_log,
+    retry,
+    retry_if_exception,
+    stop_after_attempt,
+    wait_exponential,
+)
 
 try:
     from google import genai
@@ -43,13 +52,60 @@ class AISynthesisError(Exception):
         super().__init__(f"[{code}] {message}")
 
 
+def _is_transient_error(exception: BaseException) -> bool:
+    """Identify transient network, timeout, 429 rate limit, or 5xx server errors for retry."""
+    if isinstance(exception, (httpx.RequestError, httpx.HTTPStatusError)):
+        if isinstance(exception, httpx.HTTPStatusError):
+            return exception.response.status_code in (429, 500, 502, 503, 504)
+        return True
+
+    err_str = str(exception).lower()
+    transient_keywords = ["429", "quota", "resourceexhausted", "500", "502", "503", "504", "timeout", "deadline", "rate limit"]
+    return any(keyword in err_str for keyword in transient_keywords)
+
+
+@retry(
+    stop=stop_after_attempt(3),
+    wait=wait_exponential(multiplier=1, min=2, max=10),
+    retry=retry_if_exception(_is_transient_error),
+    before_sleep=before_sleep_log(logger, logging.WARNING),
+    reraise=True,
+)
+def _call_gemini_api_with_retry(
+    client: "genai.Client",
+    prompt: str,
+) -> MarketingInsightsReport:
+    """Execute Gemini API content generation with resilience exponential backoff."""
+    config = types.GenerateContentConfig(
+        response_mime_type="application/json",
+        response_schema=MarketingInsightsReport,
+        temperature=0.2,
+    )
+
+    response = client.models.generate_content(
+        model="gemini-3.5-flash",
+        contents=prompt,
+        config=config,
+    )
+
+    if response.parsed and isinstance(response.parsed, MarketingInsightsReport):
+        logger.info("Successfully received structured MarketingInsightsReport from Gemini 3.5 Flash.")
+        return response.parsed
+    elif response.text:
+        logger.info("Parsing raw JSON string into MarketingInsightsReport schema...")
+        return MarketingInsightsReport.model_validate_json(response.text)
+    else:
+        raise AISynthesisError("CAT_SCHEMA", "Gemini response returned empty content.")
+
+
 def generate_insights_report(
     summary_data: str,
     attribution_data: str,
     api_key: str | None = None
 ) -> MarketingInsightsReport:
     """
-    Generate structured marketing insights using Gemini 3.5 Flash and Pydantic schema.
+    Generate structured marketing insights using Gemini 3.5 Flash and Pydantic schema
+    with httpx + tenacity resilience layer.
     """
     effective_api_key = api_key or os.getenv("GEMINI_API_KEY")
 
@@ -77,35 +133,17 @@ and flag saturation or efficiency risks.
 """
 
     try:
-        logger.info("Initializing Google GenAI client targeting gemini-3.5-flash...")
-        client = genai.Client(api_key=effective_api_key)
+        logger.info("Initializing Google GenAI client targeting gemini-3.5-flash with httpx timeouts...")
+        http_options = types.HttpOptions(timeout=15000)
+        client = genai.Client(api_key=effective_api_key, http_options=http_options)
 
-        config = types.GenerateContentConfig(
-            response_mime_type="application/json",
-            response_schema=MarketingInsightsReport,
-            temperature=0.2,
-        )
-
-        response = client.models.generate_content(
-            model="gemini-3.5-flash",
-            contents=prompt,
-            config=config,
-        )
-
-        if response.parsed and isinstance(response.parsed, MarketingInsightsReport):
-            logger.info("Successfully received structured MarketingInsightsReport from Gemini 3.5 Flash.")
-            return response.parsed
-        elif response.text:
-            logger.info("Parsing raw JSON string into MarketingInsightsReport schema...")
-            return MarketingInsightsReport.model_validate_json(response.text)
-        else:
-            raise AISynthesisError("CAT_SCHEMA", "Gemini response returned empty content.")
+        return _call_gemini_api_with_retry(client, prompt)
 
     except AISynthesisError:
         raise
     except Exception as e:
         err_str = str(e).lower()
-        logger.error(f"Gemini API call failed: {e}")
+        logger.error(f"Gemini API call failed after retries: {e}")
 
         if "quota" in err_str or "429" in err_str or "resourceexhausted" in err_str:
             raise AISynthesisError("CAT_QUOTA", "API quota exhausted or rate limit exceeded.", original_error=e)
