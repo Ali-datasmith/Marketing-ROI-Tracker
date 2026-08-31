@@ -1,356 +1,363 @@
-"""
-MarketingROITracker - Main Application Entry Point
-
-This Streamlit application serves as the central orchestration layer for the
-Marketing ROI Tracker. It manages user interactions, file uploads, state
-persistence, and the layout of the unified analytics dashboard. It delegates
-data ingestion, normalization, validation, database registration, metric
-computation, and chart rendering to specialized modules, ensuring a clean
-separation of concerns between UI orchestration and business logic.
-"""
-
-import streamlit as st
-import pandas as pd
+import os
+import sys
 from pathlib import Path
-from typing import Any
 
-from ui.theme import inject_custom_css
-from ingestion.csv_detector import detect_platform
-from ingestion.normalizers import normalize_to_unified_schema
-from ingestion.validators import validate_schema
+# Add `src/` directory to sys.path to support Streamlit Community Cloud deployments
+src_path = Path(__file__).resolve().parent / "src"
+if str(src_path) not in sys.path:
+    sys.path.insert(0, str(src_path))
 
-from database.duckdb_engine import get_connection, register_channel_tables, create_unified_view
-from database.queries import get_channel_summary, get_spend_revenue_flow, get_week_over_week
+import pandas as pd
+import polars as pl
+import streamlit as st
 
-from analytics.metrics import compute_efficiency_score
-from analytics.optimizer import run_optimization
-
-from visuals.kpi_cards import render_kpi_row
-from visuals.sankey_chart import build_spend_to_revenue_sankey
-from visuals.charts import (
-    build_channel_bar_comparison,
-    build_budget_pie,
-    build_current_vs_suggested_comparison,
+from ai.insights_engine import (
+    AISynthesisError,
+    generate_insights_report,
+    get_mock_insights_report,
 )
+from auth.security import DEFAULT_ADMIN_HASH, UserSession, get_admin_password, verify_password
+from engine.attribution import (
+    compute_attribution_models,
+    compute_blended_metrics,
+    compute_overall_summary,
+    compute_time_series,
+    get_duckdb_connection,
+    register_dataset,
+)
+from engine.ingestion import normalize_ad_csv, validate_normalized_data
+from reporting.pdf_generator import generate_executive_pdf
+from ui.components import (
+    render_attribution_chart,
+    render_budget_simulator,
+    render_kpi_cards,
+    render_time_series_chart,
+)
+from ui.styles import inject_custom_css
 
-# --- Page Configuration & Theme ---
+# Page Setup
 st.set_page_config(
-    page_title="Marketing ROI Tracker",
-    page_icon="📈",
+    page_title="Marketing ROI Tracker | Enterprise MTA Engine",
+    page_icon="⚡",
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
-# Inject custom CSS for dark theme intent and enterprise styling
+# Inject Dark Command-Center Theme
 inject_custom_css()
 
-# --- Session State Initialization ---
-if "unified_data" not in st.session_state:
-    st.session_state.unified_data = pd.DataFrame()
+# Session State Initialization
+if "authenticated" not in st.session_state:
+    st.session_state.authenticated = False
 
-if "processed_files" not in st.session_state:
-    st.session_state.processed_files = []
+if "user_session" not in st.session_state:
+    st.session_state.user_session = None
 
-if "theme_mode" not in st.session_state:
-    st.session_state.theme_mode = "dark"
+if "unified_df" not in st.session_state:
+    st.session_state.unified_df = pl.DataFrame()
 
-if "pending_demo_files" not in st.session_state:
-    st.session_state.pending_demo_files = []
+if "gemini_api_key" not in st.session_state:
+    st.session_state.gemini_api_key = os.getenv("GEMINI_API_KEY", "")
 
-# --- Sidebar ---
+if "ai_report" not in st.session_state:
+    st.session_state.ai_report = None
+
+if "ai_active" not in st.session_state:
+    st.session_state.ai_active = False
+
+
+# --- AUTHENTICATION GATE ---
+if not st.session_state.authenticated:
+    st.markdown("<div style='padding-top: 30px;'></div>", unsafe_allow_html=True)
+    col1, col2, col3 = st.columns([1, 1.4, 1])
+
+    with col2:
+        st.markdown(
+            """
+            <div class="glass-card">
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <h1 style="color: #00E5FF; font-size: 2.4rem; margin-bottom: 4px; font-weight: 800;">⚡ MARKETING ROI ENGINE</h1>
+                    <p style="color: #94A3B8; font-size: 1.0rem; margin-bottom: 12px;">Enterprise B2B Multi-Touch Attribution & Budget Optimization Platform</p>
+                    <h3 style="color: #F8FAFC; margin-top: 12px; margin-bottom: 0px; font-size: 1.2rem;">Executive Access Gate</h3>
+                </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+        login_tab, recruiter_tab = st.tabs(["🔐 Password Login", "⚡ Recruiter Sandbox Demo"])
+
+        effective_pass = get_admin_password()
+
+        with login_tab:
+            username_input = st.text_input("Username", value="admin")
+            st.markdown(
+                f'<div class="demo-credentials-badge">💡 DEMO CREDENTIALS: admin / {effective_pass}</div>',
+                unsafe_allow_html=True,
+            )
+            password_input = st.text_input("Password", type="password")
+
+            if st.button("Sign In", width="stretch"):
+                if username_input == "admin" and verify_password(DEFAULT_ADMIN_HASH, password_input):
+                    st.session_state.authenticated = True
+                    st.session_state.user_session = UserSession.admin_user()
+                    st.success("Authenticated successfully as Admin!")
+                    st.rerun()
+                else:
+                    st.error(f"Invalid credentials. Use 'admin' / '{effective_pass}' or click Recruiter Demo Login.")
+
+        with recruiter_tab:
+            st.info("Bypasses password verification with read-only executive sandbox permissions.")
+            if st.button("🚀 1-Click Recruiter Demo Access", width="stretch"):
+                st.session_state.authenticated = True
+                st.session_state.user_session = UserSession.demo_user()
+                st.success("Welcome Recruiter! Demo access granted.")
+                st.rerun()
+
+        st.markdown("</div>", unsafe_allow_html=True)
+
+    st.stop()
+
+
+# --- MAIN APPLICATION (AUTHENTICATED) ---
+
+# Sidebar Navigation & Controls
 with st.sidebar:
-    st.title("📊 Marketing ROI Tracker")
+    st.markdown("### ⚡ ROI Command Center")
+    user: UserSession | None = st.session_state.user_session
+    if user:
+        st.caption(f"Logged in as: **{user.username}**")
+        if user.is_demo_sandbox:
+            st.caption("🔒 Sandbox Mode: Active")
+
     st.markdown("---")
-
-    # Light/Dark mode toggle
-    is_dark_mode = st.toggle(
-        "Dark Mode",
-        value=(st.session_state.theme_mode == "dark"),
-        help="Toggle between light and dark interface themes."
-    )
-    st.session_state.theme_mode = "dark" if is_dark_mode else "light"
-
-    st.markdown("### Data Ingestion")
+    st.markdown("#### 📥 Multi-Platform CSV Ingestion")
 
     uploaded_files = st.file_uploader(
-        "Upload CSV Exports",
+        "Upload Ad Spend Exports",
         type=["csv"],
         accept_multiple_files=True,
-        help="Upload raw exports from Google Ads, Facebook Ads, Email, and SEO tools."
+        help="Upload exports from Google Ads, Meta Ads, TikTok, Email, or SEO tools.",
     )
 
-    if st.button("📂 Load Demo Data", use_container_width=True):
+    if st.button("📂 Load Enterprise Demo Dataset", width="stretch"):
         demo_dir = Path("data")
         demo_files = list(demo_dir.glob("*.csv"))
         if demo_files:
-            st.session_state.pending_demo_files = demo_files
-            st.rerun()
-        else:
-            st.warning("No demo CSV files found in the `/data` directory.")
+            dfs = []
+            for f in demo_files:
+                parsed_df = normalize_ad_csv(str(f))
+                if not parsed_df.is_empty():
+                    dfs.append(parsed_df)
+            if dfs:
+                st.session_state.unified_df = pl.concat(dfs, rechunk=True)
+                st.toast("Loaded enterprise demo datasets!", icon="✅")
+                st.rerun()
 
     st.markdown("---")
-    st.caption("v1.0.0 | Enterprise Edition")
-
-
-# --- Data Processing Orchestration ---
-def process_file(file_obj: Path | Any, filename: str) -> None:
-    """
-    Processes a single file through the ingestion pipeline:
-    Detection -> Normalization -> Validation.
-    """
-    try:
-        # Read the CSV into a DataFrame
-        df = pd.read_csv(file_obj)
-
-        # Detect the marketing platform
-        platform = detect_platform(df)
-
-        # Validate platform detection using match/case
-        match platform:
-            case "google_ads" | "facebook" | "email" | "seo":
-                pass  # Supported platform
-            case unknown_platform:
-                st.error(
-                    f"We couldn't automatically identify the platform for '{filename}' "
-                    f"(detected: {unknown_platform}). Please ensure the file matches "
-                    f"our standard export templates and try again."
-                )
-                return
-
-        # Normalize to unified schema
-        normalized_df = normalize_to_unified_schema(df, platform)
-
-        # validate_schema returns list[str] (errors only); empty list = valid.
-        validation_errors = validate_schema(normalized_df)
-        if validation_errors:
-            st.error(
-                f"The data in '{filename}' was processed but contains structural "
-                f"issues: {validation_errors}. Please review your source export settings."
-            )
-            return
-
-        # Generate success summary using walrus operator for concise checks
-        if (row_count := len(normalized_df)) > 0:
-            date_range = "N/A"
-            if (date_col := "date") in normalized_df.columns:
-                min_date = normalized_df[date_col].min()
-                max_date = normalized_df[date_col].max()
-                date_range = f"{min_date} to {max_date}"
-
-            summary_data = {
-                "File": [filename],
-                "Platform": [platform.replace("_", " ").title()],
-                "Rows Loaded": [row_count],
-                "Date Range": [date_range]
-            }
-            summary_df = pd.DataFrame(summary_data)
-
-            # Show success toast and summary table
-            st.toast(f"Successfully normalized '{filename}'!", icon="✅")
-            st.success(f"Successfully processed '{filename}'!", icon="✅")
-            st.dataframe(summary_df, use_container_width=True, hide_index=True)
-
-            # Persist to session state
-            st.session_state.processed_files.append(filename)
-            st.session_state.unified_data = pd.concat(
-                [st.session_state.unified_data, normalized_df],
-                ignore_index=True
-            )
-        else:
-            st.warning(f"The file '{filename}' was processed but contained no valid data rows.")
-
-    except Exception as e:
-        st.error(
-            f"An unexpected error occurred while processing '{filename}': {str(e)}. "
-            f"Please try re-exporting the file from your ad platform."
-        )
-
-
-# Process newly uploaded files
-if uploaded_files:
-    for file in uploaded_files:
-        if file.name not in st.session_state.processed_files:
-            process_file(file, file.name)
-
-# Process demo files if triggered
-if st.session_state.pending_demo_files:
-    for file_path in st.session_state.pending_demo_files:
-        if file_path.name not in st.session_state.processed_files:
-            process_file(file_path, file_path.name)
-    # Clear pending demo files to prevent reprocessing on subsequent reruns
-    st.session_state.pending_demo_files = []
-
-
-# --- Analytics Pipeline ---
-def load_analytics_context() -> dict[str, Any] | None:
-    """
-    Pushes the unified dataframe into DuckDB and runs the core analytical
-    queries needed across all dashboard tabs. Returns None if there is no
-    usable data yet (e.g. all rows had missing dates dropped upstream).
-
-    This is intentionally re-run on every rerun rather than cached: the
-    underlying unified_data can change on every file upload, and DuckDB
-    table registration uses CREATE OR REPLACE, so re-running this is cheap
-    and always reflects the latest uploaded/demo data.
-    """
-    unified_df = st.session_state.unified_data
-    if unified_df.empty:
-        return None
-
-    # Drop rows with missing (NaT) dates before pushing to DuckDB — these can
-    # occur when normalizers.py encounters unparseable date strings and
-    # safely converts them to NaT rather than crashing the upload.
-    clean_df = unified_df.dropna(subset=["date"])
-    if clean_df.empty:
-        return None
-
-    conn = get_connection()
-
-    # Split the unified dataframe back into per-channel dataframes, since
-    # register_channel_tables expects a dict[ChannelName, pd.DataFrame].
-    channel_dataframes = {
-        channel: group_df
-        for channel, group_df in clean_df.groupby("channel")
-    }
-
-    register_channel_tables(conn, channel_dataframes)
-    create_unified_view(conn)
-
-    summary_df = get_channel_summary(conn)
-    if summary_df.empty:
-        return None
-
-    flow_df = get_spend_revenue_flow(conn)
-    wow_df = get_week_over_week(conn)
-
-    return {
-        "conn": conn,
-        "summary_df": summary_df,
-        "flow_df": flow_df,
-        "wow_df": wow_df,
-    }
-
-
-# --- Main Area Layout ---
-st.title("Unified Marketing Analytics")
-
-if st.session_state.unified_data.empty:
-    st.info(
-        "👈 Please upload your marketing CSV files or load the demo data from the "
-        "sidebar to begin analyzing your ROI, ROAS, and CPA metrics."
+    st.markdown("#### 🤖 Gemini AI Config")
+    api_key_input = st.text_input(
+        "Gemini API Key",
+        value=st.session_state.gemini_api_key,
+        type="password",
+        help="Optional: Input your key for live gemini-3.5-flash synthesis. Mock fallback active if blank.",
     )
+    if api_key_input != st.session_state.gemini_api_key:
+        st.session_state.gemini_api_key = api_key_input
+
+    st.markdown("---")
+    if st.button("🚪 Logout", width="stretch"):
+        st.session_state.authenticated = False
+        st.session_state.user_session = None
+        st.session_state.unified_df = pl.DataFrame()
+        st.session_state.ai_report = None
+        st.rerun()
+
+
+# Ingest Uploaded Files if provided
+if uploaded_files:
+    dfs = [st.session_state.unified_df] if not st.session_state.unified_df.is_empty() else []
+    for f in uploaded_files:
+        parsed_df = normalize_ad_csv(f)
+        if not parsed_df.is_empty():
+            dfs.append(parsed_df)
+    if dfs:
+        st.session_state.unified_df = pl.concat(dfs, rechunk=True)
+
+
+# Persistent Cached DuckDB Connection
+conn = get_duckdb_connection()
+
+if not st.session_state.unified_df.is_empty():
+    register_dataset(conn, st.session_state.unified_df, table_name="ad_conversions")
+    summary_dict = compute_overall_summary(conn, "ad_conversions")
+    blended_df = compute_blended_metrics(conn, "ad_conversions")
+    attr_df = compute_attribution_models(conn, "ad_conversions")
+    ts_df = compute_time_series(conn, "ad_conversions")
 else:
-    analytics_context = load_analytics_context()
+    summary_dict = {"total_spend": 0.0, "total_revenue": 0.0, "overall_roas": 0.0, "overall_cpa": 0.0}
+    blended_df = pd.DataFrame()
+    attr_df = pd.DataFrame()
+    ts_df = pd.DataFrame()
 
-    if analytics_context is None:
-        st.warning(
-            "Your uploaded data was processed, but no rows had usable dates to "
-            "analyze. Please check your source files and try again."
+
+# --- HEADER ---
+st.title("⚡ Multi-Touch Attribution & Budget Engine")
+st.markdown("Real-time cross-channel attribution analytics, zero-copy Polars ingestion, and Gemini 3.5 AI synthesis.")
+
+
+# --- MAIN DASHBOARD TABS ---
+tab1, tab2, tab3, tab4, tab5 = st.tabs([
+    "📊 Executive Command Center",
+    "🔀 Multi-Touch Attribution",
+    "🤖 AI Insights & Brief",
+    "⚡ Budget Simulator",
+    "🔍 Schemas & Raw Data",
+])
+
+with tab1:
+    render_kpi_cards(summary_dict)
+    st.markdown("---")
+
+    if not ts_df.empty:
+        col_ts, col_tbl = st.columns([1.5, 1])
+        with col_ts:
+            render_time_series_chart(ts_df)
+        with col_tbl:
+            st.subheader("Channel Efficiency Summary")
+            st.dataframe(
+                blended_df,
+                width="stretch",
+                hide_index=True,
+                column_config={
+                    "total_spend": st.column_config.NumberColumn("Total Spend ($)", format="$%.2f"),
+                    "total_revenue": st.column_config.NumberColumn("Revenue ($)", format="$%.2f"),
+                    "blended_roas": st.column_config.NumberColumn("ROAS", format="%.2fx"),
+                    "blended_cpa": st.column_config.NumberColumn("CPA ($)", format="$%.2f"),
+                },
+            )
+    else:
+        st.info("👈 Upload your multi-platform CSV exports or click 'Load Enterprise Demo Dataset' in the sidebar to view live metrics.")
+
+with tab2:
+    st.subheader("Multi-Touch Attribution Model Analysis")
+    st.markdown("Compare attributed revenue across First-Touch, Last-Touch, Linear, and Time-Decay models powered by DuckDB SQL window functions.")
+
+    if not attr_df.empty:
+        render_attribution_chart(attr_df)
+        st.markdown("#### Attribution Breakdown Table")
+        st.dataframe(
+            attr_df,
+            width="stretch",
+            hide_index=True,
+            column_config={
+                "spend": st.column_config.NumberColumn("Spend ($)", format="$%.2f"),
+                "linear_revenue": st.column_config.NumberColumn("Linear Rev ($)", format="$%.2f"),
+                "first_touch_revenue": st.column_config.NumberColumn("First-Touch Rev ($)", format="$%.2f"),
+                "last_touch_revenue": st.column_config.NumberColumn("Last-Touch Rev ($)", format="$%.2f"),
+                "time_decay_revenue": st.column_config.NumberColumn("Time-Decay Rev ($)", format="$%.2f"),
+            },
         )
-        analytics_context = {}
+    else:
+        st.info("Upload dataset to compare Multi-Touch Attribution models.")
 
-    summary_df = analytics_context.get("summary_df", pd.DataFrame())
-    flow_df = analytics_context.get("flow_df", pd.DataFrame())
-    wow_df = analytics_context.get("wow_df", pd.DataFrame())
+with tab3:
+    st.subheader("🤖 Gemini 3.5 AI Synthesis Engine")
+    st.markdown("Generates structured executive insights using `gemini-3.5-flash` with native Pydantic schema contracts.")
 
-    tab1, tab2, tab3, tab4 = st.tabs([
-        "Overview Dashboard",
-        "Channel Comparison",
-        "Budget Optimizer",
-        "Raw Data"
-    ])
+    if blended_df.empty:
+        st.info("Upload data to enable AI executive synthesis.")
+    else:
+        if st.button("✨ Synthesize Executive Marketing Report", key="run_ai_btn"):
+            st.session_state.ai_active = True
+            with st.spinner("Calling Gemini 3.5 Flash Engine with structured response schema..."):
+                try:
+                    summary_str = blended_df.to_json(orient="records")
+                    attr_str = attr_df.to_json(orient="records") if not attr_df.empty else ""
 
-    with tab1:
-        st.header("Overview Dashboard")
-        st.markdown("High-level performance metrics across all integrated channels.")
+                    report = generate_insights_report(
+                        summary_data=summary_str,
+                        attribution_data=attr_str,
+                        api_key=st.session_state.gemini_api_key,
+                    )
+                    st.session_state.ai_report = report
+                    st.toast("Generated Gemini AI Executive Report!", icon="🤖")
+                except AISynthesisError as e:
+                    st.error(f"AI Synthesis Error [{e.code}]: {e.message}")
+                    st.info("Falling back to deterministic mock AI report for demonstration.")
+                    st.session_state.ai_report = get_mock_insights_report()
 
-        if summary_df.empty:
-            st.info("No analytics available yet — upload data with valid dates to see KPIs here.")
-        else:
-            try:
-                render_kpi_row(summary_df, wow_df)
-            except Exception as e:
-                st.error(f"Could not render KPI cards: {e}")
+        # Render active AI report
+        report = st.session_state.ai_report
+        if report:
+            st.markdown(
+                f"""
+                <div class="glass-card">
+                    <h4 style="color: #00E5FF;">Executive Performance Summary</h4>
+                    <p style="color: #E2E8F0; font-size: 1.05rem;">{report.executive_summary}</p>
+                    <hr style="border-color: rgba(255,255,255,0.1);"/>
+                    <p style="color: #94A3B8;"><strong>Blended ROAS Assessment:</strong> {report.blended_roas_assessment}</p>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+
+            col_rec, col_risk = st.columns(2)
+
+            with col_rec:
+                st.markdown("#### 💡 Recommended Budget Reallocations")
+                for rec in report.budget_recommendations:
+                    badge_color = "#10B981" if rec.action == "INCREASE" else ("#EF4444" if rec.action == "DECREASE" else "#F59E0B")
+                    st.markdown(
+                        f"""
+                        <div style="background: rgba(21, 29, 46, 0.6); padding: 12px; border-radius: 8px; border-left: 4px solid {badge_color}; margin-bottom: 10px;">
+                            <strong>{rec.channel}</strong> — <span style="color:{badge_color}; font-weight:bold;">{rec.action} by {rec.percentage_change:.1f}%</span><br/>
+                            <small style="color:#94A3B8;">{rec.rationale}</small>
+                        </div>
+                        """,
+                        unsafe_allow_html=True,
+                    )
+
+            with col_risk:
+                st.markdown("#### ⚠️ Identified Channel Risks")
+                for risk in report.risk_factors:
+                    st.markdown(
+                        f"""
+                        <div style="background: rgba(21, 29, 46, 0.6); padding: 12px; border-radius: 8px; border-left: 4px solid #EF4444; margin-bottom: 10px;">
+                            <strong>[{risk.severity}] {risk.channel}</strong> ({risk.category})<br/>
+                            <small style="color:#94A3B8;">{risk.description}</small>
+                        </div>
+                        """,
+                        unsafe_allow_html=True,
+                    )
 
             st.markdown("---")
+            # PDF Export Download Button
+            pdf_bytes = generate_executive_pdf(summary_dict, report)
+            st.download_button(
+                label="📄 Export C-Suite Executive Brief (PDF)",
+                data=pdf_bytes,
+                file_name="Marketing_ROI_Executive_Brief.pdf",
+                mime="application/pdf",
+                width="stretch",
+            )
 
-            try:
-                sankey_fig = build_spend_to_revenue_sankey(flow_df)
-                st.plotly_chart(sankey_fig, use_container_width=True, config={"displayModeBar": False})
-            except Exception as e:
-                st.error(f"Could not render the Sankey chart: {e}")
+with tab4:
+    if not blended_df.empty:
+        render_budget_simulator(blended_df)
+    else:
+        st.info("Upload dataset to activate budget simulator.")
 
-    with tab2:
-        st.header("Channel Comparison")
-        st.markdown("Side-by-side performance analysis of your marketing channels.")
+with tab5:
+    st.subheader("Raw Normalized Dataset & Validation Schemas")
+    if not st.session_state.unified_df.is_empty():
+        st.markdown("#### Pydantic Schema Validation Status")
+        try:
+            validated_dataset = validate_normalized_data(st.session_state.unified_df)
+            st.success(f"✅ Schema Validation Passed! {len(validated_dataset.records)} records validated against `StandardAdRecord` contract.")
+        except Exception as e:
+            st.error(f"Schema Validation Issue: {e}")
 
-        if summary_df.empty:
-            st.info("No analytics available yet — upload data with valid dates to see charts here.")
-        else:
-            col_left, col_right = st.columns(2)
-
-            with col_left:
-                try:
-                    roas_fig = build_channel_bar_comparison(summary_df, metric="roas")
-                    st.plotly_chart(roas_fig, use_container_width=True, config={"displayModeBar": False})
-                except Exception as e:
-                    st.error(f"Could not render the ROAS chart: {e}")
-
-            with col_right:
-                try:
-                    cpa_fig = build_channel_bar_comparison(summary_df, metric="cpa")
-                    st.plotly_chart(cpa_fig, use_container_width=True, config={"displayModeBar": False})
-                except Exception as e:
-                    st.error(f"Could not render the CPA chart: {e}")
-
-            try:
-                pie_fig = build_budget_pie(summary_df)
-                st.plotly_chart(pie_fig, use_container_width=True, config={"displayModeBar": False})
-            except Exception as e:
-                st.error(f"Could not render the budget allocation chart: {e}")
-
-    with tab3:
-        st.header("Budget Optimizer")
-        st.markdown("AI-driven recommendations for optimal budget allocation.")
-
-        if summary_df.empty:
-            st.info("No analytics available yet — upload data with valid dates to see recommendations here.")
-        else:
-            try:
-                # compute_efficiency_score requires 'roas' and 'conversion_rate',
-                # both already present in get_channel_summary()'s output.
-                efficiency_df = compute_efficiency_score(summary_df)
-
-                # analytics.optimizer expects a 'spend' column, while
-                # get_channel_summary() returns 'total_spend' — rename here
-                # rather than changing either already-verified module.
-                optimizer_input_df = efficiency_df.rename(columns={"total_spend": "spend"})
-
-                optimization_result = run_optimization(optimizer_input_df)
-
-                comparison_fig = build_current_vs_suggested_comparison(optimization_result.comparison_df)
-                st.plotly_chart(comparison_fig, use_container_width=True, config={"displayModeBar": False})
-
-                st.markdown("#### Recommended Actions")
-                for insight in optimization_result.narrative:
-                    st.markdown(f"- {insight}")
-
-                with st.expander("View detailed allocation breakdown"):
-                    st.dataframe(
-                        optimization_result.comparison_df,
-                        use_container_width=True,
-                        hide_index=True,
-                    )
-            except Exception as e:
-                st.error(f"Could not generate optimization recommendations: {e}")
-
-    with tab4:
-        st.header("Raw Data")
-        st.markdown("The fully normalized and unified dataset ready for deep-dive analysis.")
-
-        st.dataframe(
-            st.session_state.unified_data,
-            use_container_width=True,
-            height=600
-        )
-        # TODO: Insert download button for the unified dataframe (CSV/Parquet)\n
+        st.markdown("#### Normalized Polars DataFrame")
+        st.dataframe(st.session_state.unified_df.to_pandas(), width="stretch")
+    else:
+        st.info("No active dataset loaded.")
