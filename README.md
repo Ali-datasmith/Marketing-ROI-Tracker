@@ -1,3 +1,5 @@
+<img width="1672" height="941" alt="Image" src="https://github.com/user-attachments/assets/13d8a049-8bde-41d7-bc53-f4cfb305dace" />
+
 # ⚡ MARKETING ROI ENGINE: Enterprise B2B Multi-Touch Attribution & Budget Optimization Engine
 
 [![Enterprise CI Pipeline](https://github.com/Ali-datasmith/Marketing-ROI-Tracker/actions/workflows/ci.yml/badge.svg)](https://github.com/Ali-datasmith/Marketing-ROI-Tracker/actions/workflows/ci.yml)
