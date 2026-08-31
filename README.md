@@ -193,7 +193,25 @@ Open [http://localhost:8501](http://localhost:8501) in your browser.
 
 ---
 
-## 7. Testing, Quality Gates & Security Scans
+## 7. Streamlit Community Cloud Deployment
+
+This repository includes dynamic `sys.path` resolution for `src/` inside `app.py` for zero-configuration Streamlit Community Cloud deployment:
+
+1. Push your repository to GitHub.
+2. Sign in to [share.streamlit.io](https://share.streamlit.io).
+3. Connect your repository with the following settings:
+   - **Main file path**: `app.py`
+   - **Python version**: `3.12`
+4. *(Optional)* Add your Gemini API key in **Advanced Settings -> Secrets**:
+   ```toml
+   GEMINI_API_KEY = "your-actual-gemini-api-key"
+   ADMIN_PASSWORD = "your-custom-admin-password"
+   ```
+5. Deploy!
+
+---
+
+## 8. Testing, Quality Gates & Security Scans
 
 The codebase maintains strict quality standards verified via automated CI pipelines:
 
@@ -210,7 +228,7 @@ mypy src/ --ignore-missing-imports
 
 ---
 
-## 8. System Limitations & Production Roadmap
+## 9. System Limitations & Production Roadmap
 
 ### In-Memory Analytics Boundary
 - **Current Architecture**: In-memory DuckDB and Polars engines process datasets locally on single-node Streamlit instances.
@@ -226,6 +244,6 @@ mypy src/ --ignore-missing-imports
 
 ---
 
-## 9. License
+## 10. License
 
 Distributed under the MIT License. See `LICENSE` for details.
