@@ -248,4 +248,4 @@ mypy src/ --ignore-missing-imports
 
 ## 10. License
 
-Distributed under the MIT License. See `LICENSE` for details.
+Distributed under the MIT License. See [`LICENSE`](https://github.com/Ali-datasmith/Marketing-ROI-Tracker/blob/main/LICENSE) for details.
