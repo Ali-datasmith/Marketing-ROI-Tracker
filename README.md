@@ -1,19 +1,26 @@
-<img width="1672" height="941" alt="Image" src="https://github.com/user-attachments/assets/13d8a049-8bde-41d7-bc53-f4cfb305dace" />
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/13d8a049-8bde-41d7-bc53-f4cfb305dace" width="100%" height="260px" style="object-fit: cover; border-radius: 8px;" alt="Marketing ROI Engine Header Banner" />
+</p>
 
 # ⚡ MARKETING ROI ENGINE: Enterprise B2B Multi-Touch Attribution & Budget Optimization Engine
 
-[![Enterprise CI Pipeline](https://github.com/Ali-datasmith/Marketing-ROI-Tracker/actions/workflows/ci.yml/badge.svg)](https://github.com/Ali-datasmith/Marketing-ROI-Tracker/actions/workflows/ci.yml)
-[![CodeQL Security SAST](https://github.com/Ali-datasmith/Marketing-ROI-Tracker/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/Ali-datasmith/Marketing-ROI-Tracker/actions/workflows/codeql-analysis.yml)
-[![Python Version](https://img.shields.io/badge/python-3.12%20%7C%203.13-blue.svg)](https://www.python.org/)
-[![Node Baseline](https://img.shields.io/badge/node-22%20LTS-green.svg)](https://nodejs.org/)
-[![Code Style](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
-[![Type Checked](https://img.shields.io/badge/mypy-strict-brightgreen.svg)](https://mypy-lang.org/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+<p align="left">
+  <a href="https://github.com/Ali-datasmith/Marketing-ROI-Tracker/actions/workflows/ci.yml"><img src="https://github.com/Ali-datasmith/Marketing-ROI-Tracker/actions/workflows/ci.yml/badge.svg" alt="Enterprise CI Pipeline" /></a>
+  <a href="https://github.com/Ali-datasmith/Marketing-ROI-Tracker/actions/workflows/codeql-analysis.yml"><img src="https://github.com/Ali-datasmith/Marketing-ROI-Tracker/actions/workflows/codeql-analysis.yml/badge.svg" alt="CodeQL Security SAST" /></a>
+  <img src="https://img.shields.io/badge/python-3.12%20%7C%203.13-blue.svg" alt="Python Version" />
+  <img src="https://img.shields.io/badge/node-22%20LTS-green.svg" alt="Node Baseline" />
+  <img src="https://img.shields.io/badge/code%20style-ruff-000000.svg" alt="Code Style" />
+  <img src="https://img.shields.io/badge/mypy-strict-brightgreen.svg" alt="Type Checked" />
+  <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License" />
+</p>
 
 ---
 
-<!-- BANNER_GIF_PLACEHOLDER -->
-<!-- DEMO_LOOM_PLACEHOLDER -->
+## 🎬 System Architecture & Live Command Center Demo
+
+https://github.com/user-attachments/assets/35a9fc99-4807-461f-a499-1afe829953cb
+
+---
 
 ```
 ====================================================================================================
@@ -35,8 +42,6 @@
 - **Resilient Structured AI Synthesis**: `google-genai` client targeting `gemini-3.5-flash` with native Pydantic schema validation (`MarketingInsightsReport`), `httpx` timeout limits, and `tenacity` exponential backoff retries.
 - **Argon2id Auth & Sandbox Gate**: Secure Argon2id password hashing paired with a 1-click **Recruiter Demo Access** bypass for instant read-only evaluation.
 - **Glassmorphic Command Center**: Dark Streamlit presentation layer (`#0B0F19` background, `#00E5FF` cyan glow accents), Plotly model comparison charts, diminishing-returns budget simulator, and FPDF2 executive C-suite PDF report exporter.
-
----
 
 ## 2. End-to-End System Architecture
 
